@@ -1,0 +1,11 @@
+Third Huge Freckled Elephant
+Ethan Shenker, Constance Chen, Andrew Jiang, Saqif Abedin
+P0 - To Be Named
+2020-12-xx
+
+DEVLOG
+------------------
+
+shenkerE - 2020-10-16 09:40
+- Updated README to include TNPG / roster
+- Created project structure (devlog, requirements, app structure)

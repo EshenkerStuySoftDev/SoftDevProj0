@@ -1,4 +1,4 @@
-# <ProjName> by Third Huge Freckled Elephant
+# {ProjName} by Third Huge Freckled Elephant
 
 ## Roster:
 - #### Ethan Shenker
