@@ -9,3 +9,4 @@ DEVLOG
 shenkerE - 2020-10-16 09:40
 - Updated README to include TNPG / roster
 - Created project structure (devlog, requirements, app structure)
+- added .gitignore
