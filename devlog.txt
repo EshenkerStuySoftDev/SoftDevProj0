@@ -22,3 +22,4 @@ THFE -- 2020-12-21 17:00
 THFE -- 2020-12-22 09:53
 - updated design.pdf to fix typo
 - removed venv, added venv to .gitignore
+- added .bashrc
