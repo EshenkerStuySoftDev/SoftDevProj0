@@ -7,10 +7,18 @@ DEVLOG
 ------------------
 
 shenkerE -- 2020-12-16 09:40
-- Updated README to include TNPG / roster
-- Created project structure (devlog, requirements, app structure)
+- updated README to include TNPG / roster
+- created project structure (devlog, requirements, app structure)
 - added .gitignore
 
 THFE -- 2020-12-17 17:00
-- Updated requirements.txt
-- Created design doc
+- updated requirements.txt
+- created design doc
+
+THFE -- 2020-12-21 17:00
+- moved design.pdf to design_wiki.pdf
+- updated design.pdf to include structure for our blog
+
+THFE -- 2020-12-22 09:53
+- updated design.pdf to fix typo
+- removed venv, added venv to .gitignore
