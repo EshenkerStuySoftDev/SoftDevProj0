@@ -1,4 +1,4 @@
-# {ProjName} by Third Huge Freckled Elephant
+# SoftDev Blog P0 by Third Huge Freckled Elephant
 
 ## Roster:
 - #### Ethan Shenker
