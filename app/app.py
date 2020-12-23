@@ -11,7 +11,11 @@ app.secret_key = os.urandom(32)
 
 @app.route("/")
 def landing():
-    return render_template("template.html")
+    return render_template("launch.html")
+
+@app.route("/test")
+def test():
+    return render_template("test.html")
 
 
 if __name__ == '__main__':
