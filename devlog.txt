@@ -32,3 +32,8 @@ shenkerE -- 2020-12-22 17:45
 THFT - 2020-12-24 14:00
 - created tables in db
 - updated design doc w/ new roles & updated tables
+
+shenkerE -- 202-12-24 4:45
+- updated design doc to reflect table changes
+- updated posts table to handle UUID as post_id
+- created post creation mechanism

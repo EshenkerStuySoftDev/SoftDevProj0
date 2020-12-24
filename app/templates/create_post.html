@@ -1,0 +1,45 @@
+<!--
+    Third Huge Freckled Elephant
+    Ethan Shenker, Constance Chen, Andrew Jiang, Saqif Abedin
+    P0 - To Be Named
+    2020-12-xx
+-->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <title> Post Creation Page </title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="static/style.css">
+    </head>
+
+    <section class="content">
+
+        {% extends "template.html" %}
+        {% block content %}
+
+        <form action="/action_create_post" method="get">
+            
+            <label for="post_title"> Post Title </label> <br>
+            
+            <input type="text" name="post_title" size="60">
+            
+            <br> <br>
+            
+            <label for="post_content"> Post Content </label> <br>
+    
+            <textarea name="post_content" 
+                      rows="15" cols="60"
+                      style="resize:none;"></textarea> <br>
+            
+            <input type="submit" value="Submit">
+        </form>
+
+
+        {% endblock %}
+    </section>
+
+</html>
+    

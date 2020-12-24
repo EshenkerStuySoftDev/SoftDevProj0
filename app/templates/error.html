@@ -10,9 +10,9 @@
 <html lang="en">
 
     <head>
-        <title> Launch Page </title>
+        <title> Error Page </title>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="static/style.css">
+        <link rel="stylesheet" type="text/css" href="static/style.css">
     </head>
 
     <section class="content">
@@ -20,16 +20,15 @@
         {% extends "template.html" %}
         {% block content %}
 
-        <h1> Launch Page </h1>
-        <br>
-        <p> Content </p>
-        
-        <p> Create Account </p> <!-- Forms -->
-        <p> Login Function </p>
-        
-        <a href="/create_post"> Dev Link for Post Creation </a>
+        <h3> There was an error </h3>
 
+        <p>
+        {{ error }}
+        </p>
+
+        
         {% endblock %}
+
     </section>
 
 </html>
