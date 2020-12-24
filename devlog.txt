@@ -28,3 +28,7 @@ shenkerE -- 2020-12-22 17:45
 - added stylesheet
 - created launch link, HTML template
 - added db
+
+THFT - 2020-12-24 14:00
+- created tables in db
+- updated design doc w/ new roles & updated tables
