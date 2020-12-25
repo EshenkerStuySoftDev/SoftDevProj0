@@ -48,10 +48,6 @@ def action_create_post():
     post_date = str(datetime.datetime.now())[:19] ## "yyyy-mm-dd hh:mm:ss"
     post_title = a_clean(request.args['post_title']) ## data from form
     post_content = a_clean(request.args['post_content'].strip())
-
-    print(post_title)
-    print(post_content)
-    ## TODO fix error here b/c query won't accept text with single-quotes in it
     query = f"INSERT INTO posts VALUES ({user_id}, '{post_id}', '{post_date}', '{post_title}', '{post_content}')"
     c.execute(query)
     db.commit() 

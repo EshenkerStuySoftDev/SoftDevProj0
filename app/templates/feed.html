@@ -21,7 +21,14 @@
         {% block content %}
 
         {% for post in posts %}
+        
+        <br>
         {{ post }} <br>
+        {{ post[3] }} by {{ post[0] }} on {{ post[2] }} <br> <br>
+        
+        {{ post[4] }} <br> <br>
+        {{ post[1] }} <br> <br>
+        <p> ---------------------------------</p>
         {% endfor %}
 
         {% endblock %}
