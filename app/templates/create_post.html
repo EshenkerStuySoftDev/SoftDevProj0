@@ -20,16 +20,13 @@
         {% extends "template.html" %}
         {% block content %}
 
+
+        <!-- only imporant section is right here -->
         <form action="/action_create_post" method="get">
             
             <label for="post_title"> Post Title </label> <br>
-            
-            <input type="text" name="post_title" size="60">
-            
-            <br> <br>
-            
+            <input type="text" name="post_title" size="60"> <br> <br>
             <label for="post_content"> Post Content </label> <br>
-    
             <textarea name="post_content" 
                       rows="15" cols="60"
                       style="resize:none;"></textarea> <br>
