@@ -51,7 +51,8 @@ def feed():
         ## TODO have the feed based on the users that the person logged in is following
         db = sqlite3.connect("blog.db")
         c = db.cursor()
-        posts = c.execute("SELECT * FROM posts ORDER BY post_date DESC").fetchall()
+        c.execute("SELECT * FROM posts ORDER BY post_date DESC")
+        posts = list(c)
         return render_template("feed.html", posts=posts)
     return permissions()
 
@@ -95,7 +96,8 @@ def user_page():
         db = sqlite3.connect("blog.db")
         c = db.cursor()
         query = f"SELECT * FROM posts WHERE user_id={user_id} ORDER BY post_date DESC"
-        posts = c.execute(query).fetchall()
+        c.execute(query)
+        posts = list(c)
         db.close()
         return render_template("user_page.html", posts=posts) # user=username)
     return permissions()
