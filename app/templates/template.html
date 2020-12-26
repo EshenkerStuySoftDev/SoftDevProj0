@@ -15,11 +15,29 @@
         <link rel="stylesheet" href="static/style.css">
     </head>
 
-    <body>
+    <section>
         <div class="website_header">
             <a href="/"> Link to homepage </a> <!-- header to every page -->
-            <h1> hello this is our website header </h1>
-            <p> this is where a heading / main link hub can go </p>
+
+            {% if session.get("user_id") %}
+                <p> Logout </p>
+                <div class="logout">
+                    <form method="get" action="/logout">
+                        <input name="Submit" type="submit" value="Logout"> <br> <br>
+                    </form>
+                </div>
+            {% else %}
+                <p> Login Function </p>
+                <div class="login">
+                    <form method="get" action="/fake_auth">
+                        <label for="user_id"> User Id (dev) </label> <br> 
+                        <input name="user_id" type="number"> <br> <br>
+                        <input name="Submit" type="submit"> <br> <br>
+                    </form>
+                </div>
+            {% endif %}
+
+
             <!-- if user is not null, show their username, else, show something else -->
             <hr>
         </div>
@@ -30,6 +48,6 @@
             <hr>
             <p> this can be our footer </p>
         </div>
-    </body>
+    </section>
 
 </html>
