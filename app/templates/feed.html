@@ -4,36 +4,23 @@
     P0 - To Be Named
     2020-12-xx
 -->
+{% extends "template.html" %}
 
-<!DOCTYPE html>
+{% block title %} Feed Page {% endblock %}
 
-<html lang="en">
-
-    <head>
-        <title> Feed Page </title>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="static/style.css">
-    </head>
-
-    {% extends "template.html" %}
-    {% block content %}
-
-    <section class="content">
-
-        {% for post in posts %}
-        <br> <div class="post">
-            {{ post }} <br>
-            {{ post[3] }} by {{ post[0] }} on {{ post[2] }} <br> <br>
-            
-            {{ post[4] }} <br> <br> <!-- when we -->
-            {{ post[1] }} <br> <br>
-        </div>
-        <p> ---------------------------------</p>
-        {% endfor %}
-       
-    </section>
-
-    {% endblock %}
-
-</html>
+{% block content %}
+<section class="content">
+        
+    {% for post in posts %}
+    <br> <div class="post">
+        {{ post }} <br>
+        {{ post[3] }} by {{ post[0] }} on {{ post[2] }} <br> <br>
+        
+        {{ post[4] }} <br> <br> <!-- when we -->
+        {{ post[1] }} <br> <br>
+    </div>
+    <p> ---------------------------------</p>
+    {% endfor %}
     
+</section>
+{% endblock %}

@@ -6,15 +6,13 @@
 -->
 {% extends "template.html" %}
 
-{% block title %} User {{ session.get("user_id") }}'s page {% endblock %}
+{% block title %} <!-- Title goes here --> {% endblock %}
 
 {% block content %}
 <section class="content">
-    <h1> This is the personal page of user {{ session.get("user_id") }} </h1>
 
-    {% for post in posts %}
-    {{ post }} <br> <br>
-    {% endfor %}
+<h1> Oops! You don't have permission to be here. </h1>
+<h3> <a href="/"> Please return to the home page. </a> </h3>
 
 </section>
 {% endblock %}

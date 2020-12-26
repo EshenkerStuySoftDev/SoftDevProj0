@@ -38,5 +38,15 @@ shenkerE -- 2020-12-24 4:45
 - updated posts table to handle UUID as post_id
 - created post creation mechanism
 
-shenkerE -- 2020-12-25 11:00
+shenkerE -- 2020-12-25 23:00
 - created home page mechanism
+
+shenkerE -- 2020-12-26 11:00
+- created basic login/logout mechanism -- not authenticating, just adding to session
+    - andrew will handle password / basic user creation aspect
+- reorganized html jinja templating, pages now make sense
+- created persmissions lockout -- user cannot create posts if not logged in
+    - posts now track user_id based on session
+- user's home-page is now dependent on user logged into session
+    - persmissions error page will be rendered if non-logged-in user attempts to access
+- updated user home-page sorting
