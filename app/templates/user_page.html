@@ -8,6 +8,11 @@
 
 {% block title %} User {{ session.get("user_id") }}'s page {% endblock %}
 
+<!--
+    TODO: Include blogs as main display data structure, have individual posts
+    included within individual blogs
+-->
+
 {% block content %}
 <section class="content">
     <h1> This is the personal page of user {{ session.get("user_id") }} </h1>

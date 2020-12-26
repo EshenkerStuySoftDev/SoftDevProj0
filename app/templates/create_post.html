@@ -8,11 +8,24 @@
 
 {% block title %} Post Creation Page {% endblock %}
 
+<!-- 
+    TODO: Include blog Id in post creation
+        - Dropdown menu to select from blogs that have already been created
+        - "new blog" option should allow user to name the blog
+        - blogs should be array passed into render_template that consists of all blogs this person has created
+-->
+
 {% block content %}
 <section class="content">
     <!-- only imporant section is right here -->
     <form action="/action_create_post" method="get">
-        
+        <!-- 
+        <datalist id="blog_title">
+        {% for blog_title in blogs %}
+            <option value=blog_title>
+        {% endfor %}
+        </datalist>
+        -->   
         <label for="post_title"> Post Title </label> <br>
         <input type="text" name="post_title" size="60"> <br> <br>
         <label for="post_content"> Post Content </label> <br>
@@ -24,6 +37,3 @@
     </form>
 </section>
 {% endblock %}
-    
-
-    

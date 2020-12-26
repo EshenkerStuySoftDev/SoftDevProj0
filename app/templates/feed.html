@@ -8,9 +8,23 @@
 
 {% block title %} Feed Page {% endblock %}
 
+<!--
+    TODO: Include blogs as main display data structure, have individual posts
+    included within individual blogs
+-->
+
+
 {% block content %}
 <section class="content">
-        
+
+    <!-- 
+    {% for blog in blogs %}
+        {% for post in posts_in_blog %}
+    
+        {% endfor %}
+    {% endfor %}
+    -->    
+
     {% for post in posts %}
     <br> <div class="post">
         {{ post }} <br>

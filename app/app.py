@@ -5,7 +5,6 @@
 
 from flask import Flask, render_template, session, request
 from uuid import uuid4      # how to get unique user_id strings
-from helpers import a_clean # function I defined in helpers.py file
 import datetime             # how to get current date / time
 import sqlite3
 import os
@@ -19,14 +18,17 @@ app.secret_key = os.urandom(32)
 def root():
     return landing()
 
+
 # Function if user tries to access user-only content while not logged in
 def permissions():
     return render_template("permissions.html")
+
 
 @app.route("/fake_auth")
 def fake_auth():
     session['user_id'] = int(request.args['user_id'])
     return root()
+
 
 @app.route("/logout")
 def logout():
@@ -34,11 +36,13 @@ def logout():
         session.pop('user_id')  
     return root()
     
+
 @app.route("/home")
 def landing():
     if session.get('user_id'):
         return user_page()
     return render_template("launch.html")
+
 
 ## Route that provides feed -- not pretty at all, simply post entries in raw form
 @app.route("/feed")
@@ -51,6 +55,7 @@ def feed():
         return render_template("feed.html", posts=posts)
     return permissions()
 
+
 ## Unnecessary route (will be taken out), but section found on create_post.html 
 ## should go wherever that functionality ends up
 @app.route("/create_post")
@@ -58,6 +63,7 @@ def create_post():
     if session.get("user_id"):
         return render_template("create_post.html")
     return permissions()
+
 
 @app.route("/action_create_post")
 def action_create_post():
@@ -73,6 +79,7 @@ def action_create_post():
         return user_page()
     return permissions()
     
+
 @app.route("/user_page")
 def user_page():
     if session.get("user_id"):
