@@ -8,10 +8,17 @@ from uuid import uuid4      # how to get unique user_id strings
 import datetime             # how to get current date / time
 import sqlite3
 import os
-import sys ## we won't need this
+import sys ## we won't need this #TODO remove
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
+
+
+@app.route("/home")
+def landing():
+    if session.get('user_id'):
+        return user_page()
+    return render_template("launch.html")
 
 
 @app.route("/")
@@ -24,6 +31,9 @@ def permissions():
     return render_template("permissions.html")
 
 
+# ------------------------------------------------------------------------------
+# Section for Authentication
+
 @app.route("/fake_auth")
 def fake_auth():
     session['user_id'] = int(request.args['user_id'])
@@ -35,16 +45,11 @@ def logout():
     if session.get('user_id'):
         session.pop('user_id')  
     return root()
-    
-
-@app.route("/home")
-def landing():
-    if session.get('user_id'):
-        return user_page()
-    return render_template("launch.html")
 
 
-## Route that provides feed -- not pretty at all, simply post entries in raw form
+# ------------------------------------------------------------------------------
+# Section for Feed
+
 @app.route("/feed")
 def feed():
     if session.get("user_id"):
@@ -57,6 +62,9 @@ def feed():
     return permissions()
 
 
+# ------------------------------------------------------------------------------
+# Section for creating a post
+
 ## Unnecessary route (will be taken out), but section found on create_post.html 
 ## should go wherever that functionality ends up
 @app.route("/create_post")
@@ -64,6 +72,7 @@ def create_post():
     if session.get("user_id"):
         return render_template("create_post.html")
     return permissions()
+
 
 def a_clean(string):
     output = ""
@@ -89,6 +98,9 @@ def action_create_post():
     return permissions()
     
 
+# ------------------------------------------------------------------------------
+# Section for user's personal pages
+
 @app.route("/user_page")
 def user_page():
     if session.get("user_id"):
@@ -102,6 +114,8 @@ def user_page():
         return render_template("user_page.html", posts=posts) # user=username)
     return permissions()
 
+
+# ------------------------------------------------------------------------------
 
 if __name__ == '__main__':
     app.debug = True
