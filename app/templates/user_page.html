@@ -15,18 +15,18 @@
         <link rel="stylesheet" href="static/style.css">
     </head>
 
-    <section class="content">
     {% extends "template.html" %}
     {% block content %}
 
+    <section class="content">
+    <h1> This is the personal page of user {{ session.get("user_id") }} </h1>
+
     {% for post in posts %}
-
     {{ post }} <br> <br>
-
     {% endfor %}
 
-
-    {% endblock %}
     </section>
+    
+    {% endblock %}
 
 </html>

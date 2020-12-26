@@ -10,44 +10,54 @@
 <html lang="en">
 
     <head>
-        <title> Launch Page </title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="static/style.css">
     </head>
 
-    <section>
-        <div class="website_header">
-            <a href="/"> Link to homepage </a> <!-- header to every page -->
-
-            {% if session.get("user_id") %}
-                <p> Logout </p>
-                <div class="logout">
-                    <form method="get" action="/logout">
-                        <input name="Submit" type="submit" value="Logout"> <br> <br>
-                    </form>
-                </div>
-            {% else %}
-                <p> Login Function </p>
-                <div class="login">
-                    <form method="get" action="/fake_auth">
-                        <label for="user_id"> User Id (dev) </label> <br> 
-                        <input name="user_id" type="number"> <br> <br>
-                        <input name="Submit" type="submit"> <br> <br>
-                    </form>
-                </div>
-            {% endif %}
-
-
-            <!-- if user is not null, show their username, else, show something else -->
-            <hr>
+    <section class="header">
+        <div class="logo">
+            <a href="/"> Link to homepage </a> <br> <br> <!-- link back to home -->
         </div>
 
+        {% if session.get("user_id") %}
+            <h2> User id of logged in user: {{ session.get("user_id") }} </h2>
+            <div class="logout">
+                <form method="get" action="/logout">
+                    <input name="Submit" type="submit" value="Logout"> <br> <br>
+                </form>
+            </div>
+        {% else %}
+            <div class="login">
+                <form method="get" action="/fake_auth">
+                    <label for="user_id"> Login w/ user_id (dev) </label> <br> 
+                    <input name="user_id" type="number" required="required"> <br>
+                    <input name="Submit" type="submit" value="Login"> <br> <br>
+                </form>
+            </div>
+        {% endif %}
+
+        <hr>
+        
+    </section>
+
+
+    <section class="content">
+        
         {% block content %}{% endblock %} <!-- location where other file is "imported"-->
 
-        <div class="website_footer">
-            <hr>
-            <p> this can be our footer </p>
-        </div>
+    </section>
+        
+    <section class="footer">
+        <hr>
+        {% if session.get("user_id") %}
+            <a href="/create_post"> Dev Link for Post Creation </a> <br> <br>
+            <a href="/feed"> Dev link for Feed </a> <br> <br>
+            <a href="/user_page"> Dev link for user specific pages </a>
+        {% else %}
+            <p> Create an account to do this stuff (no one is logged in) </p> <!-- link to account creation -->
+        {% endif %}
+
+            
     </section>
 
 </html>

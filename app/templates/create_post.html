@@ -15,11 +15,10 @@
         <link rel="stylesheet" href="static/style.css">
     </head>
 
+    {% extends "template.html" %}
+    {% block content %}
+
     <section class="content">
-
-        {% extends "template.html" %}
-        {% block content %}
-
 
         <!-- only imporant section is right here -->
         <form action="/action_create_post" method="get">
@@ -34,9 +33,9 @@
             <input type="submit" value="Submit">
         </form>
 
-
-        {% endblock %}
     </section>
+
+    {% endblock %}
 
 </html>
     

@@ -10,32 +10,30 @@
 <html lang="en">
 
     <head>
-        <title> Post Creation Page </title>
+        <title> Feed Page </title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="static/style.css">
     </head>
 
+    {% extends "template.html" %}
+    {% block content %}
+
     <section class="content">
 
-        {% extends "template.html" %}
-        {% block content %}
-
         {% for post in posts %}
-        
-        <br>
-        <div class="post">
+        <br> <div class="post">
             {{ post }} <br>
             {{ post[3] }} by {{ post[0] }} on {{ post[2] }} <br> <br>
             
             {{ post[4] }} <br> <br> <!-- when we -->
             {{ post[1] }} <br> <br>
         </div>
-        
         <p> ---------------------------------</p>
         {% endfor %}
-
-        {% endblock %}
+       
     </section>
+
+    {% endblock %}
 
 </html>
     

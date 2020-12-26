@@ -15,23 +15,19 @@
         <link rel="stylesheet" href="static/style.css">
     </head>
 
-    <section class="content">
+    {% extends "template.html" %}
+    {% block content %}
 
-        {% extends "template.html" %}
-        {% block content %}
+    <section class="content">
 
         <h1> Launch Page </h1>
         <br>
         <p> Content </p>
-        
         <p> Create Account </p> <!-- Forms -->
-        
-        <a href="/create_post"> Dev Link for Post Creation </a> <br> <br>
-        <a href="/feed"> Dev link for Feed </a> <br> <br>
-        <a href="/user_page"> Dev link for user specific pages </a>
 
-        {% endblock %}
     </section>
+   
+    {% endblock %}
 
 </html>
     
