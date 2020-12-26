@@ -64,6 +64,14 @@ def create_post():
         return render_template("create_post.html")
     return permissions()
 
+def a_clean(string):
+    output = ""
+    for char in string:
+        if char == "'":
+            output += "'"
+        output += char
+    return output
+
 
 @app.route("/action_create_post")
 def action_create_post():
