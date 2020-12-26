@@ -16,15 +16,19 @@
     </head>
 
     <body>
-        <a href="/"> Link to homepage </a> <!-- header to every page -->
-        <h1> hello this is our website header </h1>
-        <p> this is where a heading / main link hub can go </p>
-        <hr>
+        <div class="website_header">
+            <a href="/"> Link to homepage </a> <!-- header to every page -->
+            <h1> hello this is our website header </h1>
+            <p> this is where a heading / main link hub can go </p>
+            <hr>
+        </div>
 
         {% block content %}{% endblock %} <!-- location where other file is "imported"-->
 
-        <hr>
-        <p> this can be our footer </p>
+        <div class="website_footer">
+            <hr>
+            <p> this can be our footer </p>
+        </div>
     </body>
 
 </html>

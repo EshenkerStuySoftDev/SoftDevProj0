@@ -1,9 +1,7 @@
-# We're using "%~" to represent apostrophes in strings b/c sql wasn't working
-def clean_apostrophes(string):
+def a_clean(string):
     output = ""
     for char in string:
         if char == "'":
-            output += '%~'
-        else:
-            output += char
+            output += "'"
+        output += char
     return output

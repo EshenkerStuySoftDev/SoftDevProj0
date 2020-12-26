@@ -5,7 +5,7 @@
 
 from flask import Flask, render_template, session, request
 from uuid import uuid4
-from helpers import clean_apostrophes as a_clean
+from helpers import a_clean
 import datetime
 import sqlite3
 import os
@@ -46,13 +46,12 @@ def action_create_post():
     user_id = 1
     post_id = uuid4() ## random 32-bit ID number
     post_date = str(datetime.datetime.now())[:19] ## "yyyy-mm-dd hh:mm:ss"
-    post_title = a_clean(request.args['post_title']) ## data from form
-    post_content = a_clean(request.args['post_content'].strip())
-    query = f"INSERT INTO posts VALUES ({user_id}, '{post_id}', '{post_date}', '{post_title}', '{post_content}')"
+    post_title = request.args['post_title']
+    post_content = request.args['post_content'].strip()
+    query = "INSERT INTO posts VALUES (%i, '%s', '%s', '%s', '%s')" % (user_id, post_id, post_date, a_clean(post_title), a_clean(post_content))
     c.execute(query)
     db.commit() 
     db.close()
-
     return render_template("launch.html")
 
 
