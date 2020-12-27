@@ -23,15 +23,19 @@
     
         {% endfor %}
     {% endfor %}
+
+    Is this how we want to set up the feed?
+    We can either have it as a feed of posts or a feed of blogs
     -->    
 
     {% for post in posts %}
     <br> <div class="post">
-        {{ post }} <br>
-        {{ post[3] }} by {{ post[0] }} on {{ post[2] }} <br> <br>
+        <!-- {{ post }} <br> -->
+        {{ post[4] }} by {{ post[0] }} on {{ post[3] }} <br> <br>
         
-        {{ post[4] }} <br> <br> <!-- when we -->
-        {{ post[1] }} <br> <br>
+        {{ post[5] }} <br> <br> <!-- when we -->
+        {{ post[2] }} <br> <br>
+        Belonging to blog {{ post[1] }}
     </div>
     <p> ---------------------------------</p>
     {% endfor %}

@@ -5,6 +5,7 @@
 
 from flask import Flask, render_template, session, request
 from uuid import uuid4      # how to get unique user_id strings
+from helpers import a_clean, tup_clean
 import datetime             # how to get current date / time
 import sqlite3
 import os
@@ -59,7 +60,67 @@ def feed():
         c.execute("SELECT * FROM posts ORDER BY post_date DESC")
         posts = list(c)
         return render_template("feed.html", posts=posts)
+    print("feed")
     return permissions()
+
+
+# ------------------------------------------------------------------------------
+# Section for creating a blog
+
+@app.route("/create_blog")
+def create_blog():
+    if session.get("user_id"):
+        return render_template("create_blog.html")
+    print("create blog")
+    return permissions()
+
+
+@app.route("/action_create_blog")
+def action_create_blog(name=None, content=None, title=None):
+    if session.get("user_id"):
+        db = sqlite3.connect("blog.db")
+        c = db.cursor()
+
+        user_id = session.get('user_id')
+        blog_id = uuid4()
+        if name:
+            blog_name = name.title()
+        else:
+            blog_name = a_clean(request.args['blog_name']).title()
+        post_date = str(datetime.datetime.now())[:19]
+
+        # Ensures that no two blogs by the same user have the same blog_id
+        while True:
+            query = f"SELECT * FROM blogs WHERE user_id='{user_id}' AND blog_id='{blog_id}'"
+            c.execute(query)
+            conflicts = list(c)
+            if len(conflicts) > 0:
+                blog_id = uuid4()
+            else:
+                break
+
+        while True: ## If the blog name chosen already exists
+            query = f"SELECT * FROM blogs WHERE user_id='{user_id}' AND blog_name='{blog_name}'"
+            c.execute(query)
+            conflicts = list(c)
+            if len(conflicts) > 0:
+                if name:
+                    return render_template("create_post.html", error=True, new_blog=True, post_content=content, post_title=title)
+                else:
+                    return render_template("create_blog.html", error=True)
+            else:
+                break
+
+        query = f"INSERT INTO blogs VALUES ('{user_id}', '{blog_id}', '{blog_name}', '{post_date}')"
+        print(query)
+
+        c.execute(query)
+        db.commit() 
+        db.close()
+        return user_page()
+    print("action create blog")
+    return permissions()
+
 
 
 # ------------------------------------------------------------------------------
@@ -68,29 +129,49 @@ def feed():
 ## Unnecessary route (will be taken out), but section found on create_post.html 
 ## should go wherever that functionality ends up
 @app.route("/create_post")
-def create_post():
+def create_post(new_blog=False, content=None, title=None):
     if session.get("user_id"):
-        return render_template("create_post.html")
+        db = sqlite3.connect("blog.db")
+        c = db.cursor()
+        user_id = session.get("user_id")
+        query = f"SELECT blog_name FROM blogs WHERE user_id='{user_id}'"
+        c.execute(query)
+        blogs = tup_clean(list(c))
+        if not new_blog:
+            blogs.append("New Blog")
+        db.close()
+        if content:
+            return render_template("create_post.html", new_blog=True, post_title=title, post_content=content)
+        else:
+            return render_template("create_post.html", blogs=blogs)
     return permissions()
-
-
-def a_clean(string):
-    output = ""
-    for char in string:
-        if char == "'":
-            output += "'"
-        output += char
-    return output
 
 
 @app.route("/action_create_post")
 def action_create_post():
     if session.get("user_id"):
+        post_title = request.args['post_title']
+        post_content = request.args['post_content']
+
+        try:
+            blog_name = request.args['new_blog_title']
+            return action_create_blog(blog_name, content=post_content, title=post_title) # maybe include a return statement
+        except KeyError:
+            blog_name = request.args['blog_title']
+            if blog_name == "New Blog":
+                return create_post(new_blog=True, content=post_content, title=post_title)
+
         db = sqlite3.connect("blog.db")
         c = db.cursor()
         user_id, post_id, post_date = session.get('user_id'), uuid4(), str(datetime.datetime.now())[:19]
-        post_title, post_content = a_clean(request.args['post_title']), a_clean(request.args['post_content'].strip())
-        query = f"INSERT INTO posts VALUES ({user_id}, '{post_id}', '{post_date}', '{post_title}', '{post_content}')"
+        post_title, post_content = a_clean(post_title), a_clean(post_content.strip())
+
+
+        query = f"SELECT blog_id FROM blogs WHERE blog_name='{blog_name}'"
+        c.execute(query)
+        blog_id = tup_clean(list(c))[0]
+
+        query = f"INSERT INTO posts VALUES ('{user_id}', '{blog_id}', '{post_id}', '{post_date}', '{post_title}', '{post_content}')"
         c.execute(query)
         db.commit() 
         db.close()
@@ -107,11 +188,12 @@ def user_page():
         user_id = session.get("user_id") ## TODO make home page work only if someone is logged in
         db = sqlite3.connect("blog.db")
         c = db.cursor()
-        query = f"SELECT * FROM posts WHERE user_id={user_id} ORDER BY post_date DESC"
+        query = f"SELECT * FROM blogs WHERE user_id={user_id} ORDER BY post_date DESC"
         c.execute(query)
-        posts = list(c)
+        blogs = list(c)
         db.close()
-        return render_template("user_page.html", posts=posts) # user=username)
+        return render_template("user_page.html", blogs=blogs) # user=username)
+    print("user page")
     return permissions()
 
 

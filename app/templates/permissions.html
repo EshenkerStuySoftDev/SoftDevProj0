@@ -14,5 +14,9 @@
 <h1> Oops! You don't have permission to be here. </h1>
 <h3> <a href="/"> Please return to the home page. </a> </h3>
 
+{% if session.get("user_id") is defined %}
+<p> User ID: {{ session.get("user_id")}} </p>
+{% endif %}
+
 </section>
 {% endblock %}

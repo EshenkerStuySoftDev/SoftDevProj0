@@ -15,10 +15,12 @@
 
 {% block content %}
 <section class="content">
-    <h1> This is the personal page of user {{ session.get("user_id") }} </h1>
+    <h1> This is the personal page of user {{ session.get("user_id") }} </h1> <br>
 
-    {% for post in posts %}
-    {{ post }} <br> <br>
+    <h3> Here are their blogs: </h3> <br>
+
+    {% for blog in blogs %}
+    {{ blog }} <br> <br>
     {% endfor %}
 
 </section>

@@ -50,3 +50,13 @@ shenkerE -- 2020-12-26 11:00
 - user's home-page is now dependent on user logged into session
     - persmissions error page will be rendered if non-logged-in user attempts to access
 - updated user home-page sorting
+
+shenkerE -- 2020-12-26 23:15
+- added blog functionality (blogs that consist of a series of posts)
+    - users can create new blogs whenever
+    - users select which blog they wish for the post they're creating to be assigned to
+        - users also have the option of creating a new blog in that moment
+- tables reorganized to support blog structure functionality
+- updated design doc to include blogs again
+- updated user_id field in all tables to be a uuid string rather than an integer
+    - must be included when we actually create users, system is currently vulnerable
