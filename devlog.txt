@@ -61,8 +61,7 @@ shenkerE -- 2020-12-26 23:15
 - updated user_id field in all tables to be a uuid string rather than an integer
 
 shenkerE -- 2020-12-27 12:00
-- encountered error: new posts aren't posted after users
-    are prompted to enter a new blog title after selecting
-    "New Blog" when creating a post.
-- working on solution --> includes moving some helper functions
-    to different file for clarity's sake
+- added individual blog pages
+- each blog on user's home page is linked to a subpage containing its posts
+- migrating helper functions to helpers.py
+- next todo: make posts editable once they're in blogs

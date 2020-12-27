@@ -5,7 +5,7 @@
 
 from flask import Flask, render_template, session, request
 from uuid import uuid4      # how to get unique user_id strings
-from helpers import a_clean, tup_clean
+from helpers import a_clean, tup_clean, check_blog_conflicts
 import datetime             # how to get current date / time
 import sqlite3
 import os
@@ -83,11 +83,13 @@ def action_create_blog(name=None, content=None, title=None):
 
         user_id = session.get('user_id')
         blog_id = uuid4()
+        post_date = str(datetime.datetime.now())[:19]
+
         if name:
-            blog_name = name.title()
+            blog_name = a_clean(name.title())
         else:
             blog_name = a_clean(request.args['blog_name']).title()
-        post_date = str(datetime.datetime.now())[:19]
+            print(blog_name)
 
         # Ensures that no two blogs by the same user have the same blog_id
         while True:
@@ -99,22 +101,13 @@ def action_create_blog(name=None, content=None, title=None):
             else:
                 break
 
-        while True: ## If the blog name chosen already exists
-            query = f"SELECT * FROM blogs WHERE user_id='{user_id}' AND blog_name='{blog_name}'"
-            c.execute(query)
-            conflicts = list(c)
-            if len(conflicts) > 0:
-                if name:
-                    return render_template("create_post.html", error=True, new_blog=True, post_content=content, post_title=title)
-                    # ISSUE --> Post that was sent here doesn't create
-                    # TODO: figure out a way to make sure that the post creates
-                    # solutions --> create a helper function that does this in the other function
-                    # in helpers.py? --> have it access the db
-                    # ! from helpers.py import check_blog_conflicts --> use here!!!
-                else:
-                    return render_template("create_blog.html", error=True)
+        
+        if check_blog_conflicts(user_id, blog_name):
+            if name:
+                return render_template("create_post.html", error=True, new_blog=True, post_content=content, post_title=title)
             else:
-                break
+                return render_template("create_blog.html", error=True)
+
 
         query = f"INSERT INTO blogs VALUES ('{user_id}', '{blog_id}', '{blog_name}', '{post_date}')"
         print(query)
@@ -123,7 +116,6 @@ def action_create_blog(name=None, content=None, title=None):
         db.commit() 
         db.close()
         return user_page()
-    print("action create blog")
     return permissions()
 
 
@@ -159,11 +151,11 @@ def action_create_post():
         post_content = request.args['post_content']
 
         try:
-            blog_name = request.args['new_blog_title']
-            return action_create_blog(blog_name, content=post_content, title=post_title) # maybe include a return statement
-            # TODO: Fix error where post isn't created after this is executed
+            blog_name = a_clean(request.args['new_blog_title'])
+            action_create_blog(blog_name, content=post_content, title=post_title) # maybe include a return statement
         except KeyError:
-            blog_name = request.args['blog_title']
+            blog_name = a_clean(request.args['blog_title'])
+            print(blog_name)
             if blog_name == "New Blog":
                 return create_post(new_blog=True, content=post_content, title=post_title)
 
@@ -203,6 +195,33 @@ def user_page():
     return permissions()
 
 
+# ------------------------------------------------------------------------------
+# Section for user's personal pages
+
+@app.route("/blog_page")
+def blog_page():
+    if session.get("user_id"):
+        user_id = session.get("user_id")
+        blog_id = request.args['blog_id']
+
+        db = sqlite3.connect("blog.db")
+        c = db.cursor()
+
+        query = f"SELECT blog_name FROM blogs where user_id='{user_id}' AND blog_id='{blog_id}'"
+        c.execute(query)
+        blog_name = tup_clean(list(c))[0]
+        print(blog_name)
+
+        query = f"SELECT * FROM posts WHERE user_id='{user_id}' AND blog_id='{blog_id}'"
+        c.execute(query)
+        posts = list(c)
+
+        return render_template("blog_page.html", posts=posts, blog_name=blog_name)
+    return permissions()
+
+
+
+    
 # ------------------------------------------------------------------------------
 
 if __name__ == '__main__':
