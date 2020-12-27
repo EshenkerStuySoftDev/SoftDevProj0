@@ -106,6 +106,10 @@ def action_create_blog(name=None, content=None, title=None):
             if len(conflicts) > 0:
                 if name:
                     return render_template("create_post.html", error=True, new_blog=True, post_content=content, post_title=title)
+                    # ISSUE --> Post that was sent here doesn't create
+                    # TODO: figure out a way to make sure that the post creates
+                    # solutions --> create a helper function that does this in the other function
+                    # in helpers.py? --> have it access the db
                 else:
                     return render_template("create_blog.html", error=True)
             else:
@@ -156,6 +160,7 @@ def action_create_post():
         try:
             blog_name = request.args['new_blog_title']
             return action_create_blog(blog_name, content=post_content, title=post_title) # maybe include a return statement
+            # TODO: Fix error where post isn't created after this is executed
         except KeyError:
             blog_name = request.args['blog_title']
             if blog_name == "New Blog":
