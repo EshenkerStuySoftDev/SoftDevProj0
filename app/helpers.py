@@ -3,7 +3,10 @@
 # P0 - To Be Named
 # 2020-12-xx
 
-def a_clean(string):
+import sqlite3
+
+
+def a_clean(string: str) -> str:
     output = ""
     for char in string:
         if char == "'":
@@ -11,5 +14,19 @@ def a_clean(string):
         output += char
     return output
 
-def tup_clean(arr):
+
+def tup_clean(arr: list) -> list:
     return [item[0] for item in arr]
+
+
+def check_blog_conflicts(user_id: str, blog_name: str) -> bool:
+    db = sqlite3.connect("blog.db")
+    c = db.cursor()
+
+    query = f"SELECT * FROM blogs WHERE user_id='{user_id}' AND blog_name='{blog_name}'"
+
+    c.execute(query)
+    conflicts = len(list(c))
+    db.close()
+
+    return conflicts > 0

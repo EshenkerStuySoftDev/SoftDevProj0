@@ -23,7 +23,7 @@ def landing():
 
 
 @app.route("/")
-def root():
+def root(): 
     return landing()
 
 
@@ -110,6 +110,7 @@ def action_create_blog(name=None, content=None, title=None):
                     # TODO: figure out a way to make sure that the post creates
                     # solutions --> create a helper function that does this in the other function
                     # in helpers.py? --> have it access the db
+                    # ! from helpers.py import check_blog_conflicts --> use here!!!
                 else:
                     return render_template("create_blog.html", error=True)
             else:

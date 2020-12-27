@@ -59,4 +59,10 @@ shenkerE -- 2020-12-26 23:15
 - tables reorganized to support blog structure functionality
 - updated design doc to include blogs again
 - updated user_id field in all tables to be a uuid string rather than an integer
-    - must be included when we actually create users, system is currently vulnerable
+
+shenkerE -- 2020-12-27 12:00
+- encountered error: new posts aren't posted after users
+    are prompted to enter a new blog title after selecting
+    "New Blog" when creating a post.
+- working on solution --> includes moving some helper functions
+    to different file for clarity's sake
