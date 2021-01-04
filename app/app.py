@@ -155,7 +155,6 @@ def action_create_post():
             action_create_blog(blog_name, content=post_content, title=post_title) # maybe include a return statement
         except KeyError:
             blog_name = a_clean(request.args['blog_title']).title()
-            print(blog_name)
             if blog_name == "New Blog":
                 return create_post(new_blog=True, content=post_content, title=post_title)
 
