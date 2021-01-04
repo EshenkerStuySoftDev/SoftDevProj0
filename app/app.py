@@ -220,8 +220,6 @@ def blog_page():
         return render_template("blog_page.html", posts=posts, blog_name=blog_name)
     return permissions()
 
-
-
     
 # ------------------------------------------------------------------------------
 
