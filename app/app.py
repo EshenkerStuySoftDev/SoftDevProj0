@@ -138,7 +138,8 @@ def create_post(new_blog=False, content=None, title=None):
             blogs.append("New Blog")
         db.close()
         if content:
-            return render_template("create_post.html", new_blog=True, post_title=title, post_content=content)
+            return render_template("create_post.html", new_blog=True, post_title=title, post_content=content) # TODO: add link
+            # TODO: SO THAT USERS CAN CREATE A NEW BLOG USING THE "CREATE_BLOG" FUNCTION FROM THE 'CREATE_POST' PAGE
         else:
             return render_template("create_post.html", blogs=blogs)
     return permissions()
