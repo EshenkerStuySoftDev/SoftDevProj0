@@ -65,3 +65,10 @@ shenkerE -- 2020-12-27 12:00
 - each blog on user's home page is linked to a subpage containing its posts
 - migrating helper functions to helpers.py
 - next todo: make posts editable once they're in blogs
+
+chenC -- 2021-01-05 00:01
+- added initial navigational functionality
+    - created nav bar that redirects to different parts of the website
+- edited main template file to match css file accordingly
+- made initial aesthetic changes to style.css
+    - picked fonts, formats and color scheme
