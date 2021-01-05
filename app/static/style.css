@@ -11,3 +11,99 @@
     -moz-appearance: textfield;
   }
 /* End input type=number field changes */
+
+body{
+  background-size: 100% auto;
+   background-repeat: no-repeat;
+	font-family:"Verdana", sans-serif;
+	font-size:17px;
+  letter-spacing: .02em;
+  line-height: 1.8em;
+  margin:30;
+  margin-top:80px;
+  text-align: center;
+}
+
+h1{
+  font-family:"Oswald", sans-serif;
+  text-transform: uppercase;
+  font-size:50px;
+  letter-spacing: 0em;
+  font-weight: bolder;
+  color: #19294D
+}
+
+h2{
+  font-family:"Oswald", sans-serif;
+  text-transform: uppercase;
+  font-size:35px;
+  letter-spacing: 0em;
+  font-weight: bold;
+}
+
+h3{
+  font-family:"Oswald", sans-serif;
+  text-transform: uppercase;
+  font-size:30px;
+  letter-spacing: 0em;
+  color:white;
+  background-color: #19294D;
+  width: 25%;
+  margin:auto;
+  padding: 15px;
+}
+
+ul {
+  font-family:"Futura",sans-serif;
+  letter-spacing:1px;
+	color:#000000;
+  margin-top:15px;
+  padding-top:20px;
+  position: fixed;
+  top: 0;
+
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #19294D;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #FCA311;
+}
+
+.login{
+  border: 1px solid black;
+  width: 30%;
+  padding:20px;
+  margin:auto;
+}
+
+input[type=submit] {
+  font-family:"Futura",sans-serif;
+  letter-spacing:1px;
+  width: 20%;
+  background-color:#E1E1E0;
+  color: black;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #EBEBEB;
+}
