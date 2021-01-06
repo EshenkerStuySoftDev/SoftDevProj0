@@ -85,3 +85,8 @@ chenC -- 2021-01-05 00:01
 jiangA -- 2021-01-06 5:00
 - created user.db
 - added login and signup functionality
+- switched to POST method for login/signup
+
+jiangA --2021-01-06 6:15
+- removed user.sb
+- fixed bug with user_id assignment
