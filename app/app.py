@@ -35,36 +35,32 @@ def permissions():
 # Section for Account Creation 
 @app.route("/register",methods=["POST"]) #post method needed for security, may implement hashing later, name is a bit of a misnomer since it handles logging in and registering
 def register():
-    user = sqlite3.connect("user.db")#connects to sq
-    u = user.cursor()
+    db = sqlite3.connect("blog.db")#connects to sq
+    u = db.cursor()
 
     password = request.form["password"]
     username = request.form["username"]
 
     if request.form["type"] == "login":
         u.execute(f"SELECT password, user_id FROM users WHERE username = '{username}';")
-        check = u.fetchmany() #returns tuple
-
-        #print(check, check[0][0], check[0][1]) 
-        user.close()
-        if password == check[0]:
+        db_pass = list(u) #returns tuple
+        print(db_pass)
+        if password == db_pass[0][0]:
             print("auth granted")
             session['username'] = str(request.form['username'])
-            session['user_id'] = int(check[0][1])
+            session['user_id'] = int(db_pass[0][1])
             return root()
         else:
+            print("access denied")
             pass #TODO: return bad user/pass combo
     if request.form["type"] == "signup":
-        u.execute(f"SELECT username FROM users;")
-        check = u.fetchone()
+        u.execute("SELECT username FROM users;")
+        check = list(u)
+        count = len(check)+1
         print(check)
-        count = len(check) + 1 # for user_id
-        if username in check:
-            pass #TODO: return error stating user already created
-        else:
-            u.execute(f"INSERT INTO users(user_id, username, password)VALUES('{count}','{username}','{password}');")
-            user.commit()
-            user.close()
+
+        u.execute(f"INSERT INTO users(user_id, username, password)VALUES('{count}','{username}','{password}');")
+        db.commit()
             
         
    
