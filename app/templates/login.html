@@ -14,21 +14,20 @@
     <h1> Launch Page </h1>
     <br>
     <p> Content </p>
-     <!-- Forms -->
+    <!-- Forms -->
 
         <div class="login">
             <form method="POST" action="/register">
-                <label> Create Account </label> <br>
+                <label> Login </label> <br>
 
                 {% if error %}
-                <label> Username taken, try another one </label> <br>
+                <label> Incorrect password, please try again </label> <br>
                 {% endif %}
 
                 <input name="username" type="text" required="required" min=0 required placeholder="Username"> <br>
                 <input name="password" type="password" required="required" min=0 required placeholder="Password"> <br>
-                <input name="type" type="submit" value="signup"> <br> 
+                <input name="type" type="submit" value="login"> <br> 
                 <br> 
-                <a href="/login"> Have an account? Login here </a>
             </form>
         </div>
 

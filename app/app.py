@@ -33,7 +33,7 @@ def permissions():
 
 # ------------------------------------------------------------------------------
 # Section for Account Creation 
-@app.route("/register",methods=["POST"]) #post method needed for security, may implement hashing later, name is a bit of a misnomer since it handles logging in and registering
+@app.route("/register",methods=["POST"]) #post method needed for security
 def register():
     db = sqlite3.connect("blog.db")#connects to sq
     u = db.cursor()
@@ -41,6 +41,7 @@ def register():
     password = request.form["password"]
     username = request.form["username"]
 
+    
     if request.form["type"] == "login":
         u.execute(f"SELECT password, user_id FROM users WHERE username = '{username}';")
         db_pass = list(u) #returns tuple
@@ -52,7 +53,8 @@ def register():
             return root()
         else:
             print("access denied")
-            pass #TODO: return bad user/pass combo
+            return render_template("login.html", error=True)#TODO: return bad user/pass combo
+
     if request.form["type"] == "signup":
         u.execute("SELECT username FROM users;")
         check = list(u)
@@ -60,16 +62,26 @@ def register():
         print(check[0])
         if (username,) in check:
             print("that username exists") #TODO: return error message
+            return render_template("launch.html", error=True)
+            
         else:
             u.execute(f"INSERT INTO users(user_id, username, password)VALUES('{count}','{username}','{password}');")
             print("user created")
+  
         db.commit()
-            
-        
-   
     #if username is bad, return to /home with error message
     print(request.form) # immutable dict with "username","password", and "type" 
     return root()
+
+
+# ------------------------------------------------------------------------------
+# Section for Logging in
+@app.route("/login",methods=["POST", "GET"])
+def login():
+    return render_template("login.html")
+
+
+
 
 
 # ------------------------------------------------------------------------------
