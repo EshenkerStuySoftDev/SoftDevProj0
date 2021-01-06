@@ -21,7 +21,7 @@
     <section class="header">
 
         {% if session.get("user_id") %}
-        <h2> User id of logged in user: {{ session.get("user_id") }} </h2>
+        <h4> User id of logged in user: {{ session.get("user_id") }} </h4>
         <div class="logout">
             <form method="get" action="/logout">
                 <input name="Submit" type="submit" value="Logout"> <br> 
@@ -41,8 +41,6 @@
             </form>
         </div>
         {% endif %}
-        <br> <br> 
-        <hr>
     </section>
     
 
@@ -53,13 +51,14 @@
 
     </section>
 
+    <br> <br>
+
     <section class="footer">
-        <hr>
         {% if session.get("user_id") %}
         <ul>
             <li><a href="/"> HOME </a> </li>
             <li style="float:right"><a class="active" href="/feed">FEED</a></li>
-            <li style="float:right"><a class="active" href="">PROFILE</a></li>
+            <li style="float:right"><a class="active" href="/user_page">PROFILE</a></li>
         </ul>
 
         <a href="/create_post"> Dev Link for Post Creation </a> <br> <br>
@@ -70,6 +69,7 @@
         <p> Create an account to do this stuff (no one is logged in) </p> <!-- link to account creation -->
         {% endif %}
     </section>
+
 
 </body>
 
