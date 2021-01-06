@@ -26,19 +26,27 @@
 
     Is this how we want to set up the feed?
     We can either have it as a feed of posts or a feed of blogs
-    -->    
+    -->
 
-    {% for post in posts %}
-    <br> <div class="post">
-        <!-- {{ post }} <br> -->
-        {{ post[4] }} by {{ post[0] }} on {{ post[3] }} <br> <br>
-        
-        {{ post[5] }} <br> <br> <!-- when we -->
-        {{ post[2] }} <br> <br>
-        Belonging to blog {{ post[1] }}
-    </div>
-    <p> ---------------------------------</p>
-    {% endfor %}
-    
+    <h1> Explore Your Timeline </h1>
+
+    <section class="feed">
+
+        {% for post in posts %}
+        <br>
+        <div class="container">
+            <!-- {{ post }} <br> -->
+            <h3>{{ post[4] }} </h3>
+            <h4>By {{ post[0] }} </h4>
+            <h5>Posted on {{ post[3] }} </h5>
+
+            {{ post[5] }} <br> <br><!-- when we -->
+            <h5>{{ post[2] }} <br>
+                Belonging to blog {{ post[1] }} </h5>
+        </div>
+        {% endfor %}
+
+    </section>
+
 </section>
 {% endblock %}
