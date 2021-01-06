@@ -57,9 +57,12 @@ def register():
         u.execute("SELECT username FROM users;")
         check = list(u)
         count = len(check)+1
-        print(check)
-
-        u.execute(f"INSERT INTO users(user_id, username, password)VALUES('{count}','{username}','{password}');")
+        print(check[0])
+        if (username,) in check:
+            print("that username exists") #TODO: return error message
+        else:
+            u.execute(f"INSERT INTO users(user_id, username, password)VALUES('{count}','{username}','{password}');")
+            print("user created")
         db.commit()
             
         
