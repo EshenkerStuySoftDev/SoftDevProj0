@@ -16,5 +16,16 @@
     <p> Content </p>
     <p> Create Account </p> <!-- Forms -->
 
+        <div class="login">
+            <form method="POST" action="/register">
+                <label> Login or Signup </label> <br>
+                <input name="username" type="text" required="required" min=0 required placeholder="Username"> <br>
+                <input name="password" type="password" required="required" min=0 required placeholder="Password"> <br>
+                <input name="type" type="submit" value="login"> <br> 
+                <input name="type" type="submit" value="signup"> <br> 
+                <br> 
+            </form>
+        </div>
+
 </section>
 {% endblock %}
