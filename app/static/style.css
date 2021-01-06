@@ -27,7 +27,7 @@ body{
 h1{
   font-family:"Oswald", sans-serif;
   text-transform: uppercase;
-  font-size:50px;
+  font-size:60px;
   letter-spacing: 0em;
   font-weight: bolder;
   color: #19294D
@@ -36,7 +36,7 @@ h1{
 h2{
   font-family:"Oswald", sans-serif;
   text-transform: uppercase;
-  font-size:35px;
+  font-size:45px;
   letter-spacing: 0em;
   font-weight: bold;
 }
@@ -51,6 +51,24 @@ h3{
   width: 25%;
   margin:auto;
   padding: 15px;
+}
+
+h4{
+  font-family:"Futura", sans-serif;
+  font-size:20px;
+  letter-spacing: 0em;
+  color: #19294D;
+  margin:auto;
+  padding: 5px;
+}
+
+h5{
+  font-family:"Futura", sans-serif;
+  font-size:12px;
+  letter-spacing: 0em;
+  color: rgb(146, 146, 146);
+  margin:auto;
+  font-style: italic;
 }
 
 ul {
@@ -82,7 +100,7 @@ li a {
 }
 
 li a:hover {
-  background-color: #FCA311;
+  background-color: #f1d67d;
 }
 
 .login{
@@ -92,18 +110,42 @@ li a:hover {
   margin:auto;
 }
 
+.container{
+  background-color: #f8f8f8;
+  border: 1px solid black;
+  width: 60%;
+  padding:20px;
+  margin:auto;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  background-color: white;
+  padding: 10px;
+  grid-column-gap: 20px;
+  grid-row-gap: 35px;
+}
+.grid-item {
+  background-color:#f8f8f8;
+  border: 1px solid black;
+  width: 90%;
+  padding: 20px;
+  margin:auto;
+}
+
 input[type=submit] {
   font-family:"Futura",sans-serif;
   letter-spacing:1px;
   width: 20%;
-  background-color:#E1E1E0;
+  background-color:#ffedb4;
   color: black;
-  padding: 14px 20px;
+  padding: 10px 10px;
   margin: 8px 0;
   border-radius: 4px;
   cursor: pointer;
 }
 
 input[type=submit]:hover {
-  background-color: #EBEBEB;
+  background-color: #f1d67d;
 }
