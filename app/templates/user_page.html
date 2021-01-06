@@ -15,21 +15,30 @@
 
 {% block content %}
 <section class="content">
-    <h1> This is the personal page of user {{ session.get("user_id") }} </h1> <br>
+    <h1> This is the personal page of user {{ session.get("user_id") }} </h1>
     <h3> Here are their blogs: </h3> <br>
 
+    <div class="grid-container">
     {% for blog in blogs %}
 
-    <form action="/blog_page" method="get">
+        <div class="grid-item">
 
-    {{ blog }} 
-    <input type="hidden" name="blog_id" value='{{ blog[1] }}'>
-    <input type="submit" name="Submit" value="This Blog's Posts">
-    <br> <br>
+            <form action="/blog_page" method="get">
 
-    </form>
+                <h2>{{ blog[2] }} </h2>
+                <h4>By {{ blog[0] }} </h4>
+                <h5>Created on {{ blog[3] }}  <br>
+                </h5>
+
+                <input type="hidden" name="blog_id" value='{{ blog[1] }}'>
+                <input type="submit" name="Submit" value="View Posts">
+                <br> <br>
+
+            </form>
+        </div>
 
     {% endfor %}
+    </div>
 
 </section>
 {% endblock %}
