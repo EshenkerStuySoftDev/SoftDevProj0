@@ -53,20 +53,23 @@ def register():
             return root()
         else:
             print("access denied")
-            return render_template("login.html", error=True)#TODO: return bad user/pass combo
+            return render_template("login.html", error=True)#return bad user/pass combo
 
     if request.form["type"] == "signup":
         u.execute("SELECT username FROM users;")
         check = list(u)
         count = len(check)+1
-        print(check[0])
         if (username,) in check:
-            print("that username exists") #TODO: return error message
+            print("that username exists") # return error message
             return render_template("launch.html", error=True)
             
         else:
             u.execute(f"INSERT INTO users(user_id, username, password)VALUES('{count}','{username}','{password}');")
-            print("user created")
+            session['username'] = str(username)
+            session['user_id'] = int(count)
+            db.commit()
+            print("new user created")
+            return root()
   
         db.commit()
     #if username is bad, return to /home with error message
