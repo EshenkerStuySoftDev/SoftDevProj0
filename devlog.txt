@@ -90,3 +90,6 @@ jiangA -- 2021-01-06 5:00
 jiangA --2021-01-06 6:15
 - removed user.sb
 - fixed bug with user_id assignment
+
+AbedinS --2021-01-06 9:55
+    -Updated README.md to include description of roles for roster
