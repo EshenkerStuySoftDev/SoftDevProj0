@@ -11,48 +11,51 @@
 
 {% block content %}
 <section class="content">
-    <form action="/action_create_post" method="get">
+    <br><br>
+    <section class="container">
 
-        {% if new_blog is defined %}
-        <label for="new_blog_title"> New Blog Title </label> <br>
-        <input type="text" name="new_blog_title" size="60"> <br> <br>
-            
+        <form action="/action_create_post" method="get">
+
+            <h1> Create A Blog Post </h1>
+
+            {% if new_blog is defined %}
+            <label for="new_blog_title"> New Blog Title </label> <br>
+            <input type="text" name="new_blog_title" size="60"> <br> <br>
+
             {% if error is defined %}
-                <p> Please input a blog name you haven't already used. </p>
+            <p> Please input a blog name you haven't already used. </p>
             {% endif %}
 
-        {% else %}
-        <label for="blog_title"> Choose the blog you want this post to go to </label> <br>
-        <input list="blogs" name="blog_title"> <br> <br>
-        
-        <datalist id="blogs">
-            {% for blog_title in blogs %}
+            {% else %}
+            <label for="blog_title"> Choose the blog you want this post to go to: </label> <br>
+            <input list="blogs" name="blog_title"> <br> <br>
+
+            <datalist id="blogs">
+                {% for blog_title in blogs %}
                 <option value='{{ blog_title }}'>
-            {% endfor %}
-        </datalist>
-        
-        {% endif %}
+                    {% endfor %}
+            </datalist>
 
-        
-        {% if post_title is defined %} 
-        <label for="post_title"> Post Title </label> <br>
-        <input type="text" name="post_title" size="60" value='{{ post_title }}'> <br> <br>
-        <label for="post_content"> Post Content </label> <br>
-        <textarea name="post_content" 
-                  rows="15" cols="60"
-                  style="resize:none;">{{ post_content }}</textarea> <br>
+            {% endif %}
 
-        {% else %}
-        <label for="post_title"> Post Title </label> <br>
-        <input type="text" name="post_title" size="60"> <br> <br>
-        <label for="post_content"> Post Content </label> <br>
-        <textarea name="post_content" 
-                    rows="15" cols="60"
-                    style="resize:none;"></textarea> <br>
 
-        {% endif %}
-        
-        <input type="submit" value="Submit">
-    </form>
+            {% if post_title is defined %}
+            <label for="post_title"> Post Title </label> <br>
+            <input type="text" name="post_title" size="60" value='{{ post_title }}'> <br> <br>
+            <label for="post_content"> Post Content </label> <br>
+            <textarea name="post_content" rows="15" cols="60" style="resize:none;">{{ post_content }}</textarea> <br>
+
+            {% else %}
+            <label for="post_title"> Post Title </label> <br>
+            <input type="text" name="post_title" size="60"> <br> <br>
+            <label for="post_content"> Post Content </label> <br>
+            <textarea name="post_content" rows="15" cols="60" style="resize:none;"></textarea> <br>
+
+            {% endif %}
+
+            <input type="submit" value="Submit">
+        </form>
+        <br><br>
+    </section>
 </section>
 {% endblock %}
