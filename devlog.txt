@@ -93,3 +93,7 @@ jiangA --2021-01-06 6:15
 
 AbedinS --2021-01-06 9:55
     -Updated README.md to include description of roles for roster
+
+jiangA --2021-01-06 12:40
+- added login.html
+- separated login and signup process
