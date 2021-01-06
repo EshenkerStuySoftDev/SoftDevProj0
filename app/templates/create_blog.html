@@ -11,17 +11,24 @@
 {% block content %}
 <section class="content">
 
-<h3> Create a new Blog </h3>
+    <br><br>
 
-<form action="/action_create_blog" method="get">
-    <label for="post_title"> Blog Name </label> <br>
-    <input type="text" name="blog_name" size="60"> <br> <br>
-    <input type="submit" value="Submit">
-</form>
+    <section class="container">
 
-{% if error is defined %}
-    <h4> You already have a blog with that name! Please enter a new one. </h4>
-{% endif %}
+        <h1> Create a new Blog </h1>
 
+        <form action="/action_create_blog" method="get">
+            <label for="post_title"> Enter a Blog Title </label> <br>
+            <input type="text" name="blog_name" size="60"> <br> <br>
+            <input type="submit" value="Submit">
+        </form>
+
+        {% if error is defined %}
+        <h4> You already have a blog with that name! Please enter a new one. </h4>
+        {% endif %}
+
+        <br><br>
+
+    </section>
 </section>
 {% endblock %}
