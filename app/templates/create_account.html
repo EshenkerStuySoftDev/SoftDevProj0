@@ -1,0 +1,39 @@
+<!--
+    Third Huge Freckled Elephant
+    Ethan Shenker, Constance Chen, Andrew Jiang, Saqif Abedin
+    P0 - To Be Named
+    2020-12-xx
+-->
+
+{% extends "template.html" %}
+
+{% block title %} Launch page {% endblock %}
+
+{% block content %}
+<section class="content">
+<!--
+    <h1> Launch Page </h1>
+    <br>
+    <p> Content </p>
+    --->
+    
+     <!-- Forms -->
+
+        <div class="login">
+            <form method="POST" action="/register">
+                <label> Create Account </label> <br>
+
+                {% if error %}
+                <label> Username taken, try another one </label> <br>
+                {% endif %}
+
+                <input name="username" type="text" required="required" min=0 required placeholder="Username"> <br>
+                <input name="password" type="password" required="required" min=0 required placeholder="Password"> <br>
+                <input name="type" type="submit" value="Sign Up"> <br> 
+                <br> 
+                <a href="/home"> Have an account? Login here </a>
+            </form>
+        </div>
+
+</section>
+{% endblock %}
