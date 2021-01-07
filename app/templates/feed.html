@@ -8,41 +8,22 @@
 
 {% block title %} Feed Page {% endblock %}
 
-<!--
-    TODO: Include blogs as main display data structure, have individual posts
-    included within individual blogs
--->
-
-
 {% block content %}
 <section class="content">
-
-    <!-- 
-    {% for blog in blogs %}
-        {% for post in posts_in_blog %}
-    
-        {% endfor %}
-    {% endfor %}
-
-    Is this how we want to set up the feed?
-    We can either have it as a feed of posts or a feed of blogs
-    -->
 
     <h1> Explore Your Timeline </h1>
 
     <section class="feed">
-
+        
         {% for post in posts %}
         <br>
         <div class="container">
-            <!-- {{ post }} <br> -->
             <h3>{{ post[4] }} </h3>
-            <h4>By {{ post[0] }} </h4>
+            <h4>By {{ post[0] }}</h4>
             <h5>Posted on {{ post[3] }} </h5>
 
-            {{ post[5] }} <br> <br><!-- when we -->
-            <h5>{{ post[2] }} <br>
-                Belonging to blog {{ post[1] }} </h5>
+            <br> {{ post[5] }} <br> <br>
+            <!--<h4>Belonging to Blog {{ blog_name }} </h4>-->
         </div>
         {% endfor %}
 
