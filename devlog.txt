@@ -73,7 +73,7 @@ chenC -- 2021-01-05 00:01
 - made initial aesthetic changes to style.css
     - picked fonts, formats and color scheme
 
-chenC -- 2021-01-05 00:01
+chenC -- 2021-01-06 01:22
 - fixed error in navbar
 - continued aesthetic changes in style.css
 - updated create_post.html
@@ -91,9 +91,13 @@ jiangA --2021-01-06 6:15
 - removed user.sb
 - fixed bug with user_id assignment
 
-AbedinS --2021-01-06 9:55
+abedinS --2021-01-06 9:55
     -Updated README.md to include description of roles for roster
 
 jiangA --2021-01-06 12:40
 - added login.html
 - separated login and signup process
+
+chenC -- 2021-01-07 01:22
+- updated linkages and navigation
+- updated blog_page.html
