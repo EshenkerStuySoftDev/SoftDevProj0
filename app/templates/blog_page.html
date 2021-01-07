@@ -6,14 +6,22 @@
 -->
 {% extends "template.html" %}
 
-{% block title %} Blog page for blog {{ blog_name }} {% endblock %}
+{% block title %} Blog {{ blog_name }} {% endblock %}
 
 {% block content %}
 <section class="content">
 
-{% for post in posts %}
-{{ post }} <br> <br>
-{% endfor %}
+    <h1> {{ blog_name }} </h1>
+    {% for post in posts %}
+    <br>
+    <div class="container">
+        <h3>{{ post[4] }} </h3>
+        <h4>By {{ post[0] }} </h4>
+        <h5>Posted on {{ post[3] }} </h5>
+
+        <br>{{ post[5] }} <br> 
+    </div> <br> <br>
+    {% endfor %}
 
 </section>
 {% endblock %}
