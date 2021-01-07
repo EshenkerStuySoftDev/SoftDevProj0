@@ -101,3 +101,9 @@ jiangA --2021-01-06 12:40
 chenC -- 2021-01-07 01:22
 - updated linkages and navigation
 - updated blog_page.html
+
+abedinS -- 2021-01-07 04:08
+- fixed launch.html to only show login function
+- added create account option to launch
+- created create_account.html
+- removed unnecessary footer from template
