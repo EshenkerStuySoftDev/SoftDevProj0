@@ -10,22 +10,22 @@
 {% block content %}
 <section class="content">
 
-
-     <!-- Forms -->
-
 <div class="login">
-    <form method="POST" action="/register">
+    <form method="POST" action="/register" tye>
         <label> Login </label> <br>
 
-        {% if error %}
-        <label> Incorrect password, please try again </label> <br>
+        {% if usererror is defined %}
+        <label> Incorrect username, please try again: </label> <br>
+        {% endif %}
+        {% if passerror is defined %}
+        <label> Incorrect password, please try again: </label> <br>
         {% endif %}
 
         <input name="username" type="text" required="required" min=0 required placeholder="Username"> <br>
         <input name="password" type="password" required="required" min=0 required placeholder="Password"> <br>
-        <input name="type" type="submit" value="Login"> <br> 
-        <br> 
-        <a href="/create_account"> Don't have an account? Create one here </a>
+        <input name="type" type="submit" value="Login"> <br>
+        <br>
+        <a href="/create_account"> Don't have an account? Create one here! </a>
     </form>
 </div>
 

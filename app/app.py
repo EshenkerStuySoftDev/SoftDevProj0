@@ -42,40 +42,41 @@ def register():
     username = request.form["username"]
 
     
-    if request.form["type"] == "login":
+    if request.form["type"] == "Login":
         u.execute(f"SELECT password, user_id FROM users WHERE username = '{username}';")
         db_pass = list(u) #returns tuple
-        print(db_pass)
-        if password == db_pass[0][0]:
+        if len(db_pass) != 1:
+            return render_template("launch.html", usererror=True)
+        elif password != db_pass[0][0]:
+            print("access denied")
+            return render_template("launch.html", passerror=True)#return bad pass
+        else:
             print("auth granted")
             session['username'] = str(request.form['username'])
-            session['user_id'] = int(db_pass[0][1])
+            session['user_id'] = db_pass[0][1]
             return root()
-        else:
-            print("access denied")
-            return render_template("login.html", error=True)#return bad user/pass combo
 
-    if request.form["type"] == "signup":
+    if request.form["type"] == "Sign Up":
         u.execute("SELECT username FROM users;")
         check = list(u)
-        count = len(check)+1
         if (username,) in check:
             print("that username exists") # return error message
-            return render_template("launch.html", error=True)
-            
+            return render_template("create_account.html", error=True)
         else:
-            u.execute(f"INSERT INTO users(user_id, username, password)VALUES('{count}','{username}','{password}');")
+            user_id = uuid4()
+            u.execute(f"INSERT INTO users(user_id, username, password) VALUES ('{user_id}','{username}','{password}')")
             session['username'] = str(username)
-            session['user_id'] = int(count)
+            session['user_id'] = user_id
             db.commit()
             print("new user created")
             return root()
   
         db.commit()
-    #if username is bad, return to /home with error message
-    print(request.form) # immutable dict with "username","password", and "type" 
     return root()
 
+@app.route('/create_account')
+def create_account():
+    return render_template("create_account.html")
 
 # ------------------------------------------------------------------------------
 # Section for Logging in
@@ -89,12 +90,6 @@ def login():
 
 # ------------------------------------------------------------------------------
 # Section for Authentication
-
-@app.route("/fake_auth")
-def fake_auth():
-    session['user_id'] = int(request.args['user_id'])
-    return root()
-
 
 @app.route("/logout")
 def logout():
@@ -115,7 +110,6 @@ def feed():
         c.execute("SELECT * FROM posts ORDER BY post_date DESC")
         posts = list(c)
         return render_template("feed.html", posts=posts)
-    print("feed")
     return permissions()
 
 
@@ -126,7 +120,6 @@ def feed():
 def create_blog():
     if session.get("user_id"):
         return render_template("create_blog.html")
-    print("create blog")
     return permissions()
 
 
@@ -144,7 +137,6 @@ def action_create_blog(name=None, content=None, title=None):
             blog_name = a_clean(name.title())
         else:
             blog_name = a_clean(request.args['blog_name']).title()
-            print(blog_name)
 
         # Ensures that no two blogs by the same user have the same blog_id
         while True:
@@ -165,7 +157,6 @@ def action_create_blog(name=None, content=None, title=None):
 
 
         query = f"INSERT INTO blogs VALUES ('{user_id}', '{blog_id}', '{blog_name}', '{post_date}')"
-        print(query)
 
         c.execute(query)
         db.commit() 
@@ -221,7 +212,6 @@ def action_create_post():
 
 
         query = f"SELECT blog_id FROM blogs WHERE blog_name='{blog_name}'"
-        print(query)
         c.execute(query)
         blog_id = tup_clean(list(c))[0]
 
@@ -242,12 +232,11 @@ def user_page():
         user_id = session.get("user_id") ## TODO make home page work only if someone is logged in
         db = sqlite3.connect("blog.db")
         c = db.cursor()
-        query = f"SELECT * FROM blogs WHERE user_id={user_id} ORDER BY post_date DESC"
+        query = f"SELECT * FROM blogs WHERE user_id='{user_id}' ORDER BY post_date DESC"
         c.execute(query)
         blogs = list(c)
         db.close()
         return render_template("user_page.html", blogs=blogs) # user=username)
-    print("user page")
     return permissions()
 
 
@@ -266,7 +255,6 @@ def blog_page():
         query = f"SELECT blog_name FROM blogs where user_id='{user_id}' AND blog_id='{blog_id}'"
         c.execute(query)
         blog_name = tup_clean(list(c))[0]
-        print(blog_name)
 
         query = f"SELECT * FROM posts WHERE user_id='{user_id}' AND blog_id='{blog_id}'"
         c.execute(query)
@@ -277,6 +265,52 @@ def blog_page():
 
     
 # ------------------------------------------------------------------------------
+# Section for editing posts
+@app.route("/edit_post", methods=["POST"])
+def edit_post():
+    try:
+        if session.get("user_id"):
+            db = sqlite3.connect("blog.db")
+            c = db.cursor()
+            user_id = session.get("user_id")
+            post_id = request.form["post_id"]
+            query = f"SELECT * FROM posts WHERE user_id='{user_id}' AND post_id='{post_id}'"
+            c.execute(query)
+            post = list(c)[0]
+            db.close()
+            return render_template("edit_post.html", post=post)
+        else:
+            return render_template("permissions.html")
+    except:
+        return render_template("error.html")
+    
+
+@app.route("/action_edit_post", methods=["POST"])
+def action_edit_post():
+    '''
+    try:
+            
+    except:
+        return render_template("error.html")
+    '''
+
+    if session.get("user_id"):
+        db = sqlite3.connect("blog.db")
+        c = db.cursor()
+        user_id = session.get("user_id")
+        post_id = request.form["post_id"]
+        content = a_clean(request.form["post_content"].strip())
+        query = f"UPDATE posts SET content='{content}' WHERE post_id='{post_id}' AND user_id='{user_id}'"
+        c.execute(query)
+        db.commit()
+        db.close()
+        return user_page()
+    else:
+        return render_template("permissions.html")
+
+    
+# ------------------------------------------------------------------------------
+
 
 if __name__ == '__main__':
     app.debug = True

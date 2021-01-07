@@ -30,7 +30,3 @@ def check_blog_conflicts(user_id: str, blog_name: str) -> bool:
     db.close()
 
     return conflicts > 0
-
-
-def check_uuid_conflicts(user_id: str, blog_id: str) -> bool:
-    pass

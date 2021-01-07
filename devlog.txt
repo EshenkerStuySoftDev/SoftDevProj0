@@ -107,3 +107,6 @@ abedinS -- 2021-01-07 04:08
 - added create account option to launch
 - created create_account.html
 - removed unnecessary footer from template
+
+shenkerE -- 2021-01-07 17:20
+- added editing functionality, option for users to edit their own posts

@@ -21,7 +21,7 @@
     <section class="header">
 
         {% if session.get("user_id") %}
-        <h4> User id of logged in user: {{ session.get("user_id") }} </h4>
+        <h4> Hello, {{ session.get("username") }}! </h4>
         <div class="logout">
             <form method="get" action="/logout">
                 <input name="Submit" type="submit" value="Logout"> <br> 
@@ -32,17 +32,20 @@
         <div class="welcome">
             <h2> Welcome to Elephant's Memory! </h2>
         </div>
-    <!----
-        <div class="login">
-            <form method="get" action="/fake_auth">
-                <label for="user_id"> Login w/ user_id (dev) </label> <br>
-                <input name="user_id" type="number" required="required" min=0> <br>
-                <input name="Submit" type="submit" value="Login"> <br> 
-            </form>
-        </div>
+
         {% endif %}
+    
     </section>
-     ---->
+    
+    <!-- <div class="login">
+        <form method="get" action="/fake_auth">
+            <label for="user_id"> Login w/ user_id (dev) </label> <br>
+            <input name="user_id" type="number" required="required" min=0> <br>
+            <input name="Submit" type="submit" value="Login"> <br> 
+        </form>
+    </div> -->
+        
+     
 
     <section class="content">
 
