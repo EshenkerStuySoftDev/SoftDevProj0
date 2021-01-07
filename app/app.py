@@ -264,7 +264,7 @@ def blog_page():
             c.execute(query)
             blog_name = tup_clean(list(c))[0]
 
-            query = f"SELECT * FROM posts WHERE user_id='{user_id}' AND blog_id='{blog_id}'"
+            query = f"SELECT * FROM posts WHERE user_id='{user_id}' AND blog_id='{blog_id}' ORDER BY post_date DESC"
             c.execute(query)
             posts = list(c)
 
