@@ -6,16 +6,11 @@
 -->
 {% extends "template.html" %}
 
-{% block title %} User {{ session.get("user_id") }}'s page {% endblock %}
-
-<!--
-    TODO: Include blogs as main display data structure, have individual posts
-    included within individual blogs
--->
+{% block title %} {{ session.get("username") }}'s page {% endblock %}
 
 {% block content %}
 <section class="content">
-    <h1> This is the personal page of user {{ session.get("username") }} </h1>
+    <h1> Welcome to {{ session.get("username") }}'s Profile </h1>
     <h3> Here are their blogs: </h3> <br>
 
     <div class="grid-container">
@@ -25,9 +20,9 @@
 
             <form action="/blog_page" method="get">
 
-                <h2>{{ blog[2] }} </h2>
-                <h4>By {{ blog[0] }} </h4>
-                <h5>Created on {{ blog[3] }}  <br>
+                <h2> {{ blog[2] }} </h2>
+                <h4> written by {{ session.get("username") }} </h4>
+                <h5> created on {{ blog[3] }}  <br>
                 </h5>
 
                 <input type="hidden" name="blog_id" value='{{ blog[1] }}'>
