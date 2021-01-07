@@ -33,7 +33,7 @@ def permissions():
 
 # ------------------------------------------------------------------------------
 # Section for Account Creation 
-@app.route("/register",methods=["POST"]) #post method needed for security
+@app.route("/register", methods=["POST"]) #post method needed for security
 def register():
     try:
         db = sqlite3.connect("blog.db")#connects to sq
@@ -121,7 +121,7 @@ def create_blog():
     return permissions()
 
 
-@app.route("/action_create_blog")
+@app.route("/action_create_blog", methods=["POST"])
 def action_create_blog(name=None, content=None, title=None):
     try:
         if session.get("user_id"):
@@ -135,7 +135,7 @@ def action_create_blog(name=None, content=None, title=None):
             if name:
                 blog_name = a_clean(name.title())
             else:
-                blog_name = a_clean(request.args['blog_name']).title()
+                blog_name = a_clean(request.form['blog_name']).title()
 
             # Ensures that no two blogs by the same user have the same blog_id
             while True:
@@ -192,18 +192,18 @@ def create_post(new_blog=False, content=None, title=None):
         return render_template("error.html")
 
 
-@app.route("/action_create_post")
+@app.route("/action_create_post", methods=["POST"])
 def action_create_post():
     try:
         if session.get("user_id"):
-            post_title = request.args['post_title']
-            post_content = request.args['post_content']
+            post_title = request.form['post_title']
+            post_content = request.form['post_content']
 
             try:
-                blog_name = a_clean(request.args['new_blog_title']).title()
+                blog_name = a_clean(request.form['new_blog_title']).title()
                 action_create_blog(blog_name, content=post_content, title=post_title) # maybe include a return statement
             except KeyError:
-                blog_name = a_clean(request.args['blog_title']).title()
+                blog_name = a_clean(request.form['blog_title']).title()
                 if blog_name == "New Blog":
                     return create_post(new_blog=True, content=post_content, title=post_title)
 
@@ -250,12 +250,12 @@ def user_page():
 # ------------------------------------------------------------------------------
 # Section for user's personal pages
 
-@app.route("/blog_page")
+@app.route("/blog_page", methods=["POST"])
 def blog_page():
     try:
         if session.get("user_id"):
             user_id = session.get("user_id")
-            blog_id = request.args['blog_id']
+            blog_id = request.form['blog_id']
 
             db = sqlite3.connect("blog.db")
             c = db.cursor()
