@@ -117,6 +117,10 @@ THFE -- 2021-10-07 20:00
 - access to other users' pages from feed
 - testing, finalization of everything!!
 
+chenC -- 2021-01-07 21:00
+- added details to design doc (site map)
+- uploaded team flag
+
 abedinS -- 2021-01-07 22:07
 - updated README.md with description and launch codes
 - added detail to design doc for site map section
