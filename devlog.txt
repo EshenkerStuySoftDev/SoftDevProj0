@@ -102,7 +102,7 @@ chenC -- 2021-01-07 01:22
 - updated linkages and navigation
 - updated blog_page.html
 
-abedinS -- 2021-01-07 04:08
+abedinS -- 2021-01-07 16:08
 - fixed launch.html to only show login function
 - added create account option to launch
 - created create_account.html
@@ -116,3 +116,7 @@ shenkerE -- 2021-01-07 17:20
 THFE -- 2021-10-07 20:00
 - access to other users' pages from feed
 - testing, finalization of everything!!
+
+abedinS -- 2021-01-07 22:07
+- updated README.md with description and launch codes
+- added detail to design doc for site map section
