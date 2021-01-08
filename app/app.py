@@ -10,6 +10,7 @@ import datetime             # how to get current date / time
 import sqlite3
 import os
 import sys ## we won't need this #TODO remove
+from Crypto.Hash import SHA256
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -41,6 +42,10 @@ def register():
 
         password = request.form["password"]
         username = request.form["username"]
+
+        h = SHA256.new() #password hashing
+        h.update(b'f"{password}"')
+        password = h.hexdigest()
         
         if request.form["type"] == "Login":
             u.execute(f"SELECT password, user_id FROM users WHERE username = '{username}';")
