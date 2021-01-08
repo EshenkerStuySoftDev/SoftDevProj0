@@ -1,4 +1,4 @@
-# Elephant's Memory Blog by Third Huge Freckled Elephant
+# Animated-Octo-Telegram by Third Huge Freckled Elephant
 
 ## Description:
 We created a flask-based web application in which users can sign up to create blogs. In these blogs, they can create and edit entries. Users can also interact with their feed and see the blogs of other users.
