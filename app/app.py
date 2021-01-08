@@ -31,8 +31,9 @@ def root():
 def permissions():
     return render_template("permissions.html")
 
+
 # ------------------------------------------------------------------------------
-# Section for Account Creation 
+# Section for Account Creation / Authentication
 @app.route("/register", methods=["POST"]) #post method needed for security
 def register():
     try:
@@ -48,10 +49,8 @@ def register():
             if len(db_pass) != 1:
                 return render_template("launch.html", usererror=True)
             elif password != db_pass[0][0]:
-                print("access denied")
                 return render_template("launch.html", passerror=True)#return bad pass
             else:
-                print("auth granted")
                 session['username'] = str(request.form['username'])
                 session['user_id'] = db_pass[0][1]
                 return root()
@@ -59,7 +58,6 @@ def register():
             u.execute("SELECT username FROM users;")
             check = list(u)
             if (username,) in check:
-                print("that username exists") # return error message
                 return render_template("create_account.html", error=True)
             else:
                 user_id = uuid4()
@@ -67,7 +65,6 @@ def register():
                 session['username'] = str(username)
                 session['user_id'] = user_id
                 db.commit()
-                print("new user created")
                 return root()
             db.commit()
         return root()
@@ -79,8 +76,6 @@ def register():
 def create_account():
     return render_template("create_account.html")
 
-# ------------------------------------------------------------------------------
-# Section for Authentication
 
 @app.route("/logout")
 def logout():
@@ -224,7 +219,7 @@ def action_create_blog(name=None, content=None, title=None):
         return render_template("error.html")
 
 # ------------------------------------------------------------------------------
-# Section for user's personal pages
+# Section for users' personal pages
 
 @app.route("/user_page")
 def user_page():
@@ -242,9 +237,6 @@ def user_page():
     except:
         return render_template("error.html")
 
-
-# ------------------------------------------------------------------------------
-# Section for user's personal pages
 
 @app.route("/other_blog_page", methods=["POST"])
 def other_blog_page():
@@ -299,7 +291,7 @@ def other_user_pages():
         if session.get("user_id"):
             other_user_id = request.form["other_user_id"]
             # redirect you to your personal page if you try to
-            # access it from within the feed
+            # access it from within the feed (allows you to still edit)
             if other_user_id == session.get("user_id"):
                 return user_page()
             db = sqlite3.connect("blog.db")
@@ -310,7 +302,6 @@ def other_user_pages():
             query = f"SELECT username FROM users WHERE user_id='{other_user_id}'"
             c.execute(query)
             username = tup_clean(list(c))[0]
-            print(username)
             db.close()
             return render_template("other_user.html", blogs=blogs, username=username)
         else:
@@ -357,7 +348,6 @@ def action_edit_post():
             return render_template("permissions.html")
     except:
         return render_template("error.html")
-
     
 # ------------------------------------------------------------------------------
 
