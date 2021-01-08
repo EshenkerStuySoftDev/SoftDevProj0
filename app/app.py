@@ -41,10 +41,6 @@ def register():
 
         password = request.form["password"]
         username = request.form["username"]
-
-        h = SHA256.new() #password hashing
-        h.update(b'f"{password}"')
-        password = h.hexdigest()
         
         if request.form["type"] == "Login":
             u.execute(f"SELECT password, user_id FROM users WHERE username = '{username}';")
