@@ -85,8 +85,8 @@ def create_account():
 @app.route("/logout")
 def logout():
     try:    
-        if session.get('user_id'):
-            session.pop('user_id')
+        if session.get('user_id'): # if user logged in 
+            session.pop('user_id') # clear all
             session.pop('username')
         return root()
     except:
@@ -99,10 +99,9 @@ def logout():
 def feed():
     try:
         if session.get("user_id"):
-            ## TODO have the feed based on the users that the person logged in is following
             db = sqlite3.connect("blog.db")
             c = db.cursor()
-            c.execute("SELECT * FROM posts ORDER BY post_date DESC")
+            c.execute("SELECT * FROM posts ORDER BY post_date DESC") # get all posts
             posts = list(c)
             return render_template("feed.html", posts=posts)
         return permissions()
@@ -122,10 +121,10 @@ def create_post(new_blog=False, content=None, title=None):
             query = f"SELECT blog_name FROM blogs WHERE user_id='{user_id}'"
             c.execute(query)
             blogs = tup_clean(list(c))
-            if not new_blog:
+            if not new_blog: # adds "new blog" to blog dropdown menu when creating post
                 blogs.append("New Blog")
             db.close()
-            if content:
+            if content: # stage at which the user is prompted to enter a new blog title
                 return render_template("create_post.html", new_blog=True, post_title=title, post_content=content) 
             else:
                 return render_template("create_post.html", blogs=blogs)
@@ -141,9 +140,14 @@ def action_create_post():
             post_title = request.form['post_title']
             post_content = request.form['post_content']
 
+
+            # try to get the field where the user assumedly input the new name of
+            # a blog they're looking to create.
             try:
                 blog_name = a_clean(request.form['new_blog_title']).title()
-                action_create_blog(blog_name, content=post_content, title=post_title) # maybe include a return statement
+                action_create_blog(blog_name, content=post_content, title=post_title) # create that blog
+            # if they aren't creating a new blog in that moment, create a post and assign
+            # it to the blog they've selected
             except KeyError:
                 blog_name = a_clean(request.form['blog_title']).title()
                 if blog_name == "New Blog":
@@ -154,7 +158,6 @@ def action_create_post():
             user_id, username, post_id = session.get('user_id'), session.get('username'), uuid4()
             post_title, post_content = a_clean(post_title), a_clean(post_content.strip())
             post_date = str(datetime.datetime.now())[:19]
-
 
             query = f"SELECT blog_id FROM blogs WHERE blog_name='{blog_name}'"
             c.execute(query)
@@ -204,7 +207,6 @@ def action_create_blog(name=None, content=None, title=None):
                     blog_id = uuid4()
                 else:
                     break
-
             if check_blog_conflicts(user_id, blog_name):
                 if name:
                     return render_template("create_post.html", error=True, new_blog=True, post_content=content, post_title=title)
@@ -293,26 +295,28 @@ def blog_page():
 
 @app.route("/other_user_page", methods=["POST"])
 def other_user_pages():
-    # try:
-    if session.get("user_id"):
-        other_user_id = request.form["other_user_id"]
-        if other_user_id == session.get("user_id"):
-            return user_page()
-        db = sqlite3.connect("blog.db")
-        c = db.cursor()
-        query = f"SELECT * FROM blogs WHERE user_id='{other_user_id}'"
-        c.execute(query)
-        blogs = list(c)
-        query = f"SELECT username FROM users WHERE user_id='{other_user_id}'"
-        c.execute(query)
-        username = tup_clean(list(c))[0]
-        print(username)
-        db.close()
-        return render_template("other_user.html", blogs=blogs, username=username)
-    else:
-        return permissions()
-    # except:
-        # return render_template("error.html")
+    try:
+        if session.get("user_id"):
+            other_user_id = request.form["other_user_id"]
+            # redirect you to your personal page if you try to
+            # access it from within the feed
+            if other_user_id == session.get("user_id"):
+                return user_page()
+            db = sqlite3.connect("blog.db")
+            c = db.cursor()
+            query = f"SELECT * FROM blogs WHERE user_id='{other_user_id}'"
+            c.execute(query)
+            blogs = list(c)
+            query = f"SELECT username FROM users WHERE user_id='{other_user_id}'"
+            c.execute(query)
+            username = tup_clean(list(c))[0]
+            print(username)
+            db.close()
+            return render_template("other_user.html", blogs=blogs, username=username)
+        else:
+            return permissions()
+    except:
+        return render_template("error.html")
     
 # ------------------------------------------------------------------------------
 # Section for editing posts
