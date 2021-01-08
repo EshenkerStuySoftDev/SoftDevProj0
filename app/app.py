@@ -96,7 +96,7 @@ def feed():
         if session.get("user_id"):
             db = sqlite3.connect("blog.db")
             c = db.cursor()
-            c.execute("SELECT * FROM posts ORDER BY post_date DESC") # get all posts
+            c.execute("SELECT * FROM posts ORDER BY post_date DESC")
             posts = list(c)
             return render_template("feed.html", posts=posts)
         return permissions()
@@ -116,13 +116,17 @@ def create_post(new_blog=False, content=None, title=None):
             query = f"SELECT blog_name FROM blogs WHERE user_id='{user_id}'"
             c.execute(query)
             blogs = tup_clean(list(c))
-            if not new_blog: # adds "new blog" to blog dropdown menu when creating post
-                blogs.append("New Blog")
+
+            # if a new blog isn't already in the process of being created, give user an extra option
+            if not new_blog: 
+                blogs.append("New Blog") # adds "new blog" option to blog dropdown menu when creating post
+
             db.close()
+
             if content: # stage at which the user is prompted to enter a new blog title
-                return render_template("create_post.html", new_blog=True, post_title=title, post_content=content) 
+                return render_template("create_post.html", new_blog=True, post_title=title, post_content=content) # only title is new
             else:
-                return render_template("create_post.html", blogs=blogs)
+                return render_template("create_post.html", blogs=blogs) # standard template
         return permissions()
     except:
         return render_template("error.html")
@@ -134,7 +138,6 @@ def action_create_post():
         if session.get("user_id"):
             post_title = request.form['post_title']
             post_content = request.form['post_content']
-
 
             # try to get the field where the user assumedly input the new name of
             # a blog they're looking to create.
@@ -188,12 +191,14 @@ def action_create_blog(name=None, content=None, title=None):
             blog_id = uuid4()
             post_date = str(datetime.datetime.now())[:19]
 
+            # if the blog is being created from within another function, name will be
+            # passed as an arg rather than as part of the request
             if name:
                 blog_name = a_clean(name.title())
             else:
                 blog_name = a_clean(request.form['blog_name']).title()
 
-            # Ensures that no two blogs by the same user have the same blog_id
+            # Ensures that no two blogs by the same user have the same blog_id / name
             while True:
                 query = f"SELECT * FROM blogs WHERE user_id='{user_id}' AND blog_id='{blog_id}'"
                 c.execute(query)
@@ -202,6 +207,7 @@ def action_create_blog(name=None, content=None, title=None):
                     blog_id = uuid4()
                 else:
                     break
+
             if check_blog_conflicts(user_id, blog_name):
                 if name:
                     return render_template("create_post.html", error=True, new_blog=True, post_content=content, post_title=title)
@@ -237,7 +243,7 @@ def user_page():
     except:
         return render_template("error.html")
 
-
+# allows users to have access to other people's blog pages from the main feed
 @app.route("/other_blog_page", methods=["POST"])
 def other_blog_page():
     try:
@@ -290,10 +296,12 @@ def other_user_pages():
     try:
         if session.get("user_id"):
             other_user_id = request.form["other_user_id"]
+
             # redirect you to your personal page if you try to
             # access it from within the feed (allows you to still edit)
             if other_user_id == session.get("user_id"):
                 return user_page()
+
             db = sqlite3.connect("blog.db")
             c = db.cursor()
             query = f"SELECT * FROM blogs WHERE user_id='{other_user_id}'"
@@ -303,6 +311,7 @@ def other_user_pages():
             c.execute(query)
             username = tup_clean(list(c))[0]
             db.close()
+            
             return render_template("other_user.html", blogs=blogs, username=username)
         else:
             return permissions()
