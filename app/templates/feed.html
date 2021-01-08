@@ -18,11 +18,14 @@
         {% for post in posts %}
         <br>
         <div class="container">
-            <h3>{{ post[4] }} </h3>
-            <h4>By {{ post[0] }}</h4>
-            <h5>Posted on {{ post[3] }} </h5>
+            <h3>{{ post[5] }} </h3>
+            <form action="/other_user_page" method="post">
+                <input type="hidden", name="other_user_id", value='{{ post[0] }}'>
+                <h4> <input type="submit", name="Submit", value="By {{ post[1] }}">
+            </form>
+            <h5>Posted on {{ post[4] }} </h5>
 
-            <br> {{ post[5] }} <br> <br>
+            <br> {{ post[6] }} <br> <br>
             <!--<h4>Belonging to Blog {{ blog_name }} </h4>-->
         </div>
         {% endfor %}

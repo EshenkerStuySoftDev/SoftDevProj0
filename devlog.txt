@@ -112,3 +112,6 @@ shenkerE -- 2021-01-07 17:20
 - added editing functionality, option for users to edit their own posts
 - posts are organized in ascending order by date on blog pages
 - all form methods are now post except logout
+
+THFE -- 2021-10-07 20:00
+- access to other users' pages from feed

@@ -206,15 +206,16 @@ def action_create_post():
 
             db = sqlite3.connect("blog.db")
             c = db.cursor()
-            user_id, post_id, post_date = session.get('user_id'), uuid4(), str(datetime.datetime.now())[:19]
+            user_id, username, post_id = session.get('user_id'), session.get('username'), uuid4()
             post_title, post_content = a_clean(post_title), a_clean(post_content.strip())
+            post_date = str(datetime.datetime.now())[:19]
 
 
             query = f"SELECT blog_id FROM blogs WHERE blog_name='{blog_name}'"
             c.execute(query)
             blog_id = tup_clean(list(c))[0]
 
-            query = f"INSERT INTO posts VALUES ('{user_id}', '{blog_id}', '{post_id}', '{post_date}', '{post_title}', '{post_content}')"
+            query = f"INSERT INTO posts VALUES ('{user_id}', '{username}', '{blog_id}', '{post_id}', '{post_date}', '{post_title}', '{post_content}')"
             c.execute(query)
             db.commit() 
             db.close()
@@ -270,6 +271,26 @@ def blog_page():
     except:
         return render_template("error.html")
 
+@app.route("/other_user_page", methods=["POST"])
+def other_user_pages():
+    # try:
+    if session.get("user_id"):
+        other_user_id = request.form["other_user_id"]
+        db = sqlite3.connect("blog.db")
+        c = db.cursor()
+        query = f"SELECT * FROM blogs WHERE user_id='{other_user_id}'"
+        c.execute(query)
+        blogs = list(c)
+        query = f"SELECT username FROM users WHERE user_id='{other_user_id}'"
+        c.execute(query)
+        username = tup_clean(list(c))[0]
+        print(username)
+        db.close()
+        return render_template("other_user.html", blogs=blogs, username=username)
+    else:
+        return permissions()
+    # except:
+        # return render_template("error.html")
     
 # ------------------------------------------------------------------------------
 # Section for editing posts
