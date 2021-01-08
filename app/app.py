@@ -10,7 +10,6 @@ import datetime             # how to get current date / time
 import sqlite3
 import os
 import sys ## we won't need this #TODO remove
-from Crypto.Hash import SHA256
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
