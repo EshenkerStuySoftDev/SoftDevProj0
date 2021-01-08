@@ -1,8 +1,8 @@
 <!--
     Third Huge Freckled Elephant
     Ethan Shenker, Constance Chen, Andrew Jiang, Saqif Abedin
-    P0 - To Be Named
-    2020-12-xx
+    P0 - Elephant's Memory
+    2020-12-25
 -->
 
 <!DOCTYPE html>
@@ -60,10 +60,10 @@
         {% if session.get("user_id") %}
         <ul>
             <li><a href="/"> HOME </a> </li>
-            <li style="float:right"><a class="active" href="/create_post">NEW POST</a></li>
-            <li style="float:right"><a class="active" href="/create_blog">NEW BLOG</a></li>
-            <li style="float:right"><a class="active" href="/feed">FEED</a></li>
-            <li style="float:right"><a class="active" href="/user_page">PROFILE</a></li>
+            <li class="left_side"><a class="active" href="/create_post">NEW POST</a></li>
+            <li class="left_side"><a class="active" href="/create_blog">NEW BLOG</a></li>
+            <li class="left_side"><a class="active" href="/feed">FEED</a></li>
+            <li class="left_side"><a class="active" href="/user_page">PROFILE</a></li>
         </ul>
         {% endif %}
     </section>

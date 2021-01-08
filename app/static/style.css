@@ -149,3 +149,7 @@ input[type=submit] {
 input[type=submit]:hover {
   background-color: #f1d67d;
 }
+
+li.left_side {
+  float:right;
+}

@@ -1,8 +1,8 @@
 <!--
     Third Huge Freckled Elephant
     Ethan Shenker, Constance Chen, Andrew Jiang, Saqif Abedin
-    P0 - To Be Named
-    2020-12-xx
+    P0 - Elephant's Memory
+    2020-12-25
 -->
 {% extends "template.html" %}
 
@@ -18,14 +18,15 @@
 
         <div class="grid-item">
 
-            <form action="/blog_page" method="post">
+            <form action="/other_blog_page" method="post">
 
                 <h2> {{ blog[2] }} </h2>
-                <h4> written by {{ session.get("username") }} </h4>
+                <h4> written by {{ username }} </h4>
                 <h5> posted on {{ blog[3] }}  <br>
                 </h5>
 
                 <input type="hidden" name="blog_id" value='{{ blog[1] }}'>
+                <input type="hidden" name="other_user_id" value='{{ blog[0] }}'>
                 <input type="submit" name="Submit" value="View Posts">
                 <br> <br>
 

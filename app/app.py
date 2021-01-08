@@ -109,61 +109,6 @@ def feed():
     except:
         return render_template("error.html")
 
-
-# ------------------------------------------------------------------------------
-# Section for creating a blog
-
-@app.route("/create_blog")
-def create_blog():
-    if session.get("user_id"):
-        return render_template("create_blog.html")
-    return permissions()
-
-
-@app.route("/action_create_blog", methods=["POST"])
-def action_create_blog(name=None, content=None, title=None):
-    try:
-        if session.get("user_id"):
-            db = sqlite3.connect("blog.db")
-            c = db.cursor()
-
-            user_id = session.get('user_id')
-            blog_id = uuid4()
-            post_date = str(datetime.datetime.now())[:19]
-
-            if name:
-                blog_name = a_clean(name.title())
-            else:
-                blog_name = a_clean(request.form['blog_name']).title()
-
-            # Ensures that no two blogs by the same user have the same blog_id
-            while True:
-                query = f"SELECT * FROM blogs WHERE user_id='{user_id}' AND blog_id='{blog_id}'"
-                c.execute(query)
-                conflicts = list(c)
-                if len(conflicts) > 0:
-                    blog_id = uuid4()
-                else:
-                    break
-
-            if check_blog_conflicts(user_id, blog_name):
-                if name:
-                    return render_template("create_post.html", error=True, new_blog=True, post_content=content, post_title=title)
-                else:
-                    return render_template("create_blog.html", error=True)
-
-            query = f"INSERT INTO blogs VALUES ('{user_id}', '{blog_id}', '{blog_name}', '{post_date}')"
-
-            c.execute(query)
-            db.commit() 
-            db.close()
-            return user_page()
-        return permissions()
-    except:
-        return render_template("error.html")
-
-
-
 # ------------------------------------------------------------------------------
 # Section for creating a post
 
@@ -224,6 +169,57 @@ def action_create_post():
     except:
         return render_template("error.html")
 
+# ------------------------------------------------------------------------------
+# Section for creating a blog
+
+@app.route("/create_blog")
+def create_blog():
+    if session.get("user_id"):
+        return render_template("create_blog.html")
+    return permissions()
+
+
+@app.route("/action_create_blog", methods=["POST"])
+def action_create_blog(name=None, content=None, title=None):
+    try:
+        if session.get("user_id"):
+            db = sqlite3.connect("blog.db")
+            c = db.cursor()
+
+            user_id = session.get('user_id')
+            blog_id = uuid4()
+            post_date = str(datetime.datetime.now())[:19]
+
+            if name:
+                blog_name = a_clean(name.title())
+            else:
+                blog_name = a_clean(request.form['blog_name']).title()
+
+            # Ensures that no two blogs by the same user have the same blog_id
+            while True:
+                query = f"SELECT * FROM blogs WHERE user_id='{user_id}' AND blog_id='{blog_id}'"
+                c.execute(query)
+                conflicts = list(c)
+                if len(conflicts) > 0:
+                    blog_id = uuid4()
+                else:
+                    break
+
+            if check_blog_conflicts(user_id, blog_name):
+                if name:
+                    return render_template("create_post.html", error=True, new_blog=True, post_content=content, post_title=title)
+                else:
+                    return render_template("create_blog.html", error=True)
+
+            query = f"INSERT INTO blogs VALUES ('{user_id}', '{blog_id}', '{blog_name}', '{post_date}')"
+
+            c.execute(query)
+            db.commit() 
+            db.close()
+            return create_post()
+        return permissions()
+    except:
+        return render_template("error.html")
 
 # ------------------------------------------------------------------------------
 # Section for user's personal pages
@@ -248,11 +244,35 @@ def user_page():
 # ------------------------------------------------------------------------------
 # Section for user's personal pages
 
+@app.route("/other_blog_page", methods=["POST"])
+def other_blog_page():
+    try:
+        if session.get("user_id"):
+            other_user_id = request.form['other_user_id']
+            blog_id = request.form['blog_id']
+
+            db = sqlite3.connect("blog.db")
+            c = db.cursor()
+
+            query = f"SELECT blog_name FROM blogs where user_id='{other_user_id}' AND blog_id='{blog_id}'"
+            c.execute(query)
+            blog_name = tup_clean(list(c))[0]
+
+            query = f"SELECT * FROM posts WHERE user_id='{other_user_id}' AND blog_id='{blog_id}' ORDER BY post_date DESC"
+            c.execute(query)
+            posts = list(c)
+
+            return render_template("blog_page.html", posts=posts, blog_name=blog_name)
+        return permissions()
+    except:
+        return render_template("error.html")
+
+
 @app.route("/blog_page", methods=["POST"])
 def blog_page():
     try:
         if session.get("user_id"):
-            user_id = session.get("user_id")
+            user_id = session.get('user_id')
             blog_id = request.form['blog_id']
 
             db = sqlite3.connect("blog.db")
@@ -276,6 +296,8 @@ def other_user_pages():
     # try:
     if session.get("user_id"):
         other_user_id = request.form["other_user_id"]
+        if other_user_id == session.get("user_id"):
+            return user_page()
         db = sqlite3.connect("blog.db")
         c = db.cursor()
         query = f"SELECT * FROM blogs WHERE user_id='{other_user_id}'"
