@@ -55,7 +55,6 @@ def register():
                 session['username'] = str(request.form['username'])
                 session['user_id'] = db_pass[0][1]
                 return root()
-
         elif request.form["type"] == "Sign Up":
             u.execute("SELECT username FROM users;")
             check = list(u)
@@ -147,13 +146,11 @@ def action_create_blog(name=None, content=None, title=None):
                 else:
                     break
 
-            
             if check_blog_conflicts(user_id, blog_name):
                 if name:
                     return render_template("create_post.html", error=True, new_blog=True, post_content=content, post_title=title)
                 else:
                     return render_template("create_blog.html", error=True)
-
 
             query = f"INSERT INTO blogs VALUES ('{user_id}', '{blog_id}', '{blog_name}', '{post_date}')"
 

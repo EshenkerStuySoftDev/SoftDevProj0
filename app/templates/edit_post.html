@@ -13,7 +13,7 @@
 <section class="content">
     <h1> {{ post[4] }} </h1>
     <form action="/action_edit_post" method="post">
-        <label for="post_content"> Edit your post here: </label>
+        <label for="post_content"> Edit your post here: </label> <br>
         <textarea name="post_content" rows="15" cols="60" style="resize:none;">{{ post[5] }}</textarea> <br>
         <input type="hidden" name="post_id" value='{{ post[2] }}'>
         <input type="submit" name="Submit" value="Save Changes">
