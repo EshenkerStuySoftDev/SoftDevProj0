@@ -44,7 +44,7 @@ def register():
         username = request.form["username"]
         
         if request.form["type"] == "Login":
-            u.execute(f"SELECT password, user_id FROM users WHERE username = '{username}';")
+            u.execute(f"SELECT password, user_id FROM users WHERE username = '{username}'")
             db_pass = list(u) #returns tuple
             if len(db_pass) != 1:
                 return render_template("launch.html", usererror=True)
@@ -55,7 +55,7 @@ def register():
                 session['user_id'] = db_pass[0][1]
                 return root()
         elif request.form["type"] == "Sign Up":
-            u.execute("SELECT username FROM users;")
+            u.execute("SELECT username FROM users")
             check = list(u)
             if (username,) in check:
                 return render_template("create_account.html", error=True)
