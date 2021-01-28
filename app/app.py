@@ -38,7 +38,7 @@ def permissions():
 @app.route("/register", methods=["POST"]) #post method needed for security
 def register():
     # try:
-    db = sqlite3.connect("var/www/SoftdevProj0/app/blog.db")#connects to sq
+    db = sqlite3.connect(dir + "blog.db")#connects to sq
     u = db.cursor()
 
     password = request.form["password"]
