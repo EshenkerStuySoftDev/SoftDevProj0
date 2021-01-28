@@ -13,8 +13,7 @@ import sys ## we won't need this #TODO remove
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
-# dir = os.path.dirname(__file__) or "."
-# dir += "/"
+
 
 @app.route("/home")
 def landing():
@@ -38,8 +37,7 @@ def permissions():
 @app.route("/register", methods=["POST"]) #post method needed for security
 def register():
     # try:
-    print("blog.db")
-    db = sqlite3.connect("blog.db") # dir + "blog.db") #connects to sqlite table
+    db = sqlite3.connect("var/www/SoftdevProj0/app/blog.db")#connects to sq
     u = db.cursor()
 
     password = request.form["password"]
