@@ -36,40 +36,40 @@ def permissions():
 # Section for Account Creation / Authentication
 @app.route("/register", methods=["POST"]) #post method needed for security
 def register():
-    try:
-        db = sqlite3.connect("blog.db")#connects to sq
-        u = db.cursor()
+    # try:
+    db = sqlite3.connect("blog.db")#connects to sq
+    u = db.cursor()
 
-        password = request.form["password"]
-        username = request.form["username"]
-        
-        if request.form["type"] == "Login":
-            u.execute(f"SELECT password, user_id FROM users WHERE username = '{username}'")
-            db_pass = list(u) #returns tuple
-            if len(db_pass) != 1:
-                return render_template("launch.html", usererror=True)
-            elif password != db_pass[0][0]:
-                return render_template("launch.html", passerror=True)#return bad pass
-            else:
-                session['username'] = str(request.form['username'])
-                session['user_id'] = db_pass[0][1]
-                return root()
-        elif request.form["type"] == "Sign Up":
-            u.execute("SELECT username FROM users")
-            check = list(u)
-            if (username,) in check:
-                return render_template("create_account.html", error=True)
-            else:
-                user_id = uuid4()
-                u.execute(f"INSERT INTO users(user_id, username, password) VALUES ('{user_id}','{username}','{password}')")
-                session['username'] = str(username)
-                session['user_id'] = user_id
-                db.commit()
-                return root()
+    password = request.form["password"]
+    username = request.form["username"]
+    
+    if request.form["type"] == "Login":
+        u.execute(f"SELECT password, user_id FROM users WHERE username = '{username}'")
+        db_pass = list(u) #returns tuple
+        if len(db_pass) != 1:
+            return render_template("launch.html", usererror=True)
+        elif password != db_pass[0][0]:
+            return render_template("launch.html", passerror=True)#return bad pass
+        else:
+            session['username'] = str(request.form['username'])
+            session['user_id'] = db_pass[0][1]
+            return root()
+    elif request.form["type"] == "Sign Up":
+        u.execute("SELECT username FROM users")
+        check = list(u)
+        if (username,) in check:
+            return render_template("create_account.html", error=True)
+        else:
+            user_id = uuid4()
+            u.execute(f"INSERT INTO users(user_id, username, password) VALUES ('{user_id}','{username}','{password}')")
+            session['username'] = str(username)
+            session['user_id'] = user_id
             db.commit()
-        return root()
-    except:
-        return render_template("error.html")
+            return root()
+        db.commit()
+    return root()
+    # except:
+    #     return render_template("error.html")
     
 
 @app.route('/create_account')
