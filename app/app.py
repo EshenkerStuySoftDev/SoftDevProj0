@@ -13,8 +13,8 @@ import sys ## we won't need this #TODO remove
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
-dir = "./"
-sys.path.append(dir)
+dir = os.path.dirname(__file__)
+dir += "/"
 
 @app.route("/home")
 def landing():
