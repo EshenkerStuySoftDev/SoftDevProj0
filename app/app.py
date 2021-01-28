@@ -13,7 +13,8 @@ import sys ## we won't need this #TODO remove
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
-
+dir = os.path.dirname(__file__) or "."
+dir += "/"
 
 @app.route("/home")
 def landing():
@@ -37,7 +38,8 @@ def permissions():
 @app.route("/register", methods=["POST"]) #post method needed for security
 def register():
     # try:
-    db = sqlite3.connect("var/www/SoftdevProj0/app/blog.db")#connects to sq
+    print(dir + "blog.db")
+    db = sqlite3.connect(dir + "blog.db") # dir + "blog.db") #connects to sqlite table
     u = db.cursor()
 
     password = request.form["password"]
@@ -94,7 +96,7 @@ def logout():
 def feed():
     try:
         if session.get("user_id"):
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
             c.execute("SELECT * FROM posts ORDER BY post_date DESC")
             posts = list(c)
@@ -110,7 +112,7 @@ def feed():
 def create_post(new_blog=False, content=None, title=None):
     try:
         if session.get("user_id"):
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
             user_id = session.get("user_id")
             query = f"SELECT blog_name FROM blogs WHERE user_id='{user_id}'"
@@ -151,7 +153,7 @@ def action_create_post():
                 if blog_name == "New Blog":
                     return create_post(new_blog=True, content=post_content, title=post_title)
 
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
             user_id, username, post_id = session.get('user_id'), session.get('username'), uuid4()
             post_title, post_content = a_clean(post_title), a_clean(post_content.strip())
@@ -184,7 +186,7 @@ def create_blog():
 def action_create_blog(name=None, content=None, title=None):
     try:
         if session.get("user_id"):
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
 
             user_id = session.get('user_id')
@@ -232,7 +234,7 @@ def user_page():
     try:
         if session.get("user_id"):
             user_id = session.get("user_id") ## TODO make home page work only if someone is logged in
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
             query = f"SELECT * FROM blogs WHERE user_id='{user_id}' ORDER BY post_date DESC"
             c.execute(query)
@@ -251,7 +253,7 @@ def other_blog_page():
             other_user_id = request.form['other_user_id']
             blog_id = request.form['blog_id']
 
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
 
             query = f"SELECT blog_name FROM blogs where user_id='{other_user_id}' AND blog_id='{blog_id}'"
@@ -275,7 +277,7 @@ def blog_page():
             user_id = session.get('user_id')
             blog_id = request.form['blog_id']
 
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
 
             query = f"SELECT blog_name FROM blogs where user_id='{user_id}' AND blog_id='{blog_id}'"
@@ -302,7 +304,7 @@ def other_user_pages():
             if other_user_id == session.get("user_id"):
                 return user_page()
 
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
             query = f"SELECT * FROM blogs WHERE user_id='{other_user_id}'"
             c.execute(query)
@@ -324,7 +326,7 @@ def other_user_pages():
 def edit_post():
     try:
         if session.get("user_id"):
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
             user_id = session.get("user_id")
             post_id = request.form["post_id"]
@@ -343,7 +345,7 @@ def edit_post():
 def action_edit_post():
     try:
         if session.get("user_id"):
-            db = sqlite3.connect("blog.db")
+            db = sqlite3.connect(dir + "blog.db")
             c = db.cursor()
             user_id = session.get("user_id")
             post_id = request.form["post_id"]
@@ -363,5 +365,5 @@ def action_edit_post():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host='0.0.0.0')
+    app.run()
     
