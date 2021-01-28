@@ -14,7 +14,7 @@ import sys ## we won't need this #TODO remove
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 if os.path.dirname(__file__):
-	dir = os.path.dirname(__file__)
+    dir = os.path.dirname(__file__)
 else:
 	dir = "."
 dir += "/"
