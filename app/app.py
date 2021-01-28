@@ -13,7 +13,6 @@ import sys ## we won't need this #TODO remove
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
-sys.path.append("/var/www/SoftDevProj0/app/")
 
 
 @app.route("/home")
@@ -38,7 +37,7 @@ def permissions():
 @app.route("/register", methods=["POST"]) #post method needed for security
 def register():
     # try:
-    db = sqlite3.connect("blog.db")#connects to sq
+    db = sqlite3.connect("var/www/SoftdevProj0/app/blog.db")#connects to sq
     u = db.cursor()
 
     password = request.form["password"]
