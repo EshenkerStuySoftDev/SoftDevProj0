@@ -13,7 +13,7 @@ import sys ## we won't need this #TODO remove
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
-sys.path.append("//var//www//SoftDevProj0//app")
+sys.path.append("/var/www/SoftDevProj0/app")
 
 
 @app.route("/home")
